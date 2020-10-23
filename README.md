@@ -11,6 +11,11 @@ Once Go is installed, clone this repository.
 
 How is the project structured? We are using Go modules. All the project dependencies are stored in the `go.mod` file. Use the command `go mod download` to automatically download and install the dependencies. You should do this before writing any code.
 
+Before running the code, you should rename creds_sample.json to creds.json
+
+The config.json file stores configuration information and SQL,
+ the creds.json file stores credentials. Look at structs.go to see what fields are available. The json:"" lets go know how to read and write json
+
 How to run the code: Using the terminal at the bottom of VSCode, you can do `go run github.com/onlinebooks-418teapot` to start the application.
 
 Workflow:
