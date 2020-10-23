@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"log"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -17,4 +18,11 @@ func InitDB() {
 		panic(err)
 	}
 	db = dbh
+}
+
+func SqlInits() {
+	for i, s := range Config.StartupQueries {
+		log.Println(i)
+		log.Println(s)
+	}
 }

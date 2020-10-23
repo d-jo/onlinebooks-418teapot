@@ -5,6 +5,6 @@
   "sql_port": "3306",
   "sql_dbname": "onlinebooks",
   "sql_init_queries": [
-    ""
+    "init1"
   ]
 }

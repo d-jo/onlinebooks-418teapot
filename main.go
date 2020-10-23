@@ -56,9 +56,15 @@ func loadConfigs() {
 }
 
 func main() {
+	// start server
 	log.Println("server.init")
+	// load configs
 	loadConfigs()
+	// initialize DB connection
 	InitDB()
+	SqlInits()
+
+	log.Println("Success running!")
 	log.Println(Creds)
 	log.Println(Config)
 }

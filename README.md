@@ -13,3 +13,8 @@ How is the project structured? We are using Go modules. All the project dependen
 
 How to run the code: Using the terminal at the bottom of VSCode, you can do `go run github.com/onlinebooks-418teapot` to start the application.
 
+Workflow:
+GitHub branch workflow
+https://guides.github.com/introduction/flow/
+
+
