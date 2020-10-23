@@ -3,7 +3,7 @@
 ## Development
 First, install Go at `https://golang.org/doc/install`. This process depends on your operating system
 
-I strongly reccomend VSCode for writing Go. It is a free IDE from Microsoft. After installing VSCode, you should install the Go extension using the four squares in the left riboon for better integration.
+I strongly recommend VSCode for writing Go. It is a free IDE from Microsoft. After installing VSCode, you should install the Go extension using the four squares in the left riboon for better integration.
 
 Before continuing, run the commands `go version` and `go env` to confirm the installation.
 
