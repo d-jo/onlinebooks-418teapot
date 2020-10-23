@@ -1,11 +1,15 @@
 # OnlineBooks
 
 ## Development
-First, install Go. This process depends on your operating system and I dont have any details on how to do it on windows. Find a tutorial online.
+First, install Go at `https://golang.org/doc/install`. This process depends on your operating system
 
-I strongly reccomend VSCode for writing Go. After installing VSCode, you should install the Go extension for better integration.
+I strongly reccomend VSCode for writing Go. It is a free IDE from Microsoft. After installing VSCode, you should install the Go extension using the four squares in the left riboon for better integration.
 
-How to run the code: Using the terminal at the bottom, you can do `go run github.com/onlinebooks-418teapot`
+Before continuing, run the commands `go version` and `go env` to confirm the installation.
 
+Once Go is installed, clone this repository. 
 
-## Source Map
+How is the project structured? We are using Go modules. All the project dependencies are stored in the `go.mod` file. Use the command `go mod download` to automatically download and install the dependencies. You should do this before writing any code.
+
+How to run the code: Using the terminal at the bottom of VSCode, you can do `go run github.com/onlinebooks-418teapot` to start the application.
+
