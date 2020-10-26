@@ -1,5 +1,14 @@
 package main
 
+// This file holds the structs
+
+type Listing struct {
+}
+
+type GenericJson struct {
+	Data map[string]int `json:"data"`
+}
+
 // ConfigStruct struct holds non-sensitive information
 // about configuration
 type ConfigStruct struct {

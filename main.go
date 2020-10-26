@@ -4,7 +4,11 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
+
+	"github.com/gorilla/mux"
+	"golang.org/x/crypto/bcrypt"
 )
 
 var (
@@ -12,13 +16,25 @@ var (
 	Config ConfigStruct
 )
 
+// HashPassword hashes a password are returns the hash
+func HashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 12)
+	return string(bytes), err
+}
+
+// ComparePassword compares a password and a hash, returns true if match
+func ComparePassword(password, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
+}
+
 func loadConfigs() {
 	log.Println("loadconfig.config.start_load")
 	// Get file handler
 	cfgFle, err := os.Open("config.json")
 	if err != nil {
-		panic(err)
 		log.Println("loadconfig.config.fail_handle")
+		panic(err)
 	}
 	// defer closing the file to the end of the func
 	defer cfgFle.Close()
@@ -38,8 +54,8 @@ func loadConfigs() {
 	// get handler to cred file
 	credFle, err := os.Open("creds.json")
 	if err != nil {
-		panic(err)
 		log.Println("loadconfig.creds.fail_handle")
+		panic(err)
 	}
 	// defer closing file to end of func
 	defer credFle.Close()
@@ -67,4 +83,21 @@ func main() {
 	log.Println("Success running!")
 	log.Println(Creds)
 	log.Println(Config)
+
+	// http
+	rootRouter := mux.NewRouter()
+	fs := http.FileServer(http.Dir("./static"))
+	rootRouter.PathPrefix("/static/").Handler(http.StripPrefix("/static/", fs))
+
+	// JSON Endpoints
+	rootRouter.HandleFunc("/create_listing", CreateListingHandler)
+	rootRouter.HandleFunc("/listing/{listing_id}", PublicListingDataHandler)
+	rootRouter.HandleFunc("/listing/{listing_id}/update", UpdateListingHandler)
+	rootRouter.HandleFunc("/delete", DeleteListingHandler)
+	rootRouter.HandleFunc("/active", ActiveListingsHandler)
+	rootRouter.HandleFunc("/search", SearchListingsHandler)
+	rootRouter.HandleFunc("/private_details", PrivateListingDetailsHandler)
+	rootRouter.HandleFunc("/listing/{listing_id}/purchase", PurchaseListingHandler)
+
+	rootRouter.HandleFunc("/", IndexHandler)
 }
