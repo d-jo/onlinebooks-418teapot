@@ -9,7 +9,7 @@ Before continuing, run the commands `go version` and `go env` to confirm the ins
 
 Once Go is installed, clone this repository. 
 
-How is the project structured? We are using Go modules. All the project dependencies are stored in the `go.mod` file. Use the command `go mod download` to automatically download and install the dependencies. You should do this before writing any code.
+How is the project structured? We are using Go modules. All the project dependencies are stored in the `go.mod` file. Use the command `go mod download all` to automatically download and install the dependencies. You should do this before writing any code.
 
 Before running the code, you should rename creds_sample.json to creds.json
 
