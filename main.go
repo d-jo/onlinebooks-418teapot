@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -26,6 +27,30 @@ func HashPassword(password string) (string, error) {
 func ComparePassword(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
+}
+
+// DecodeJSONBody takes a reader and retuns a generic JSON
+func DecodeJSONBody(body io.Reader) GenericJSON {
+	log.Println("decodejson.decode.start")
+	// read the bodt
+	bytedata, err := ioutil.ReadAll(body)
+	if err != nil {
+		log.Println("decodejson.read.fail")
+		panic(err)
+	}
+
+	// delcare buffer
+	var jsdata GenericJSON
+
+	// unmarshal the data into the struct
+	err = json.Unmarshal(bytedata, &jsdata)
+
+	if err != nil {
+		log.Println("decodejson.decode.fail")
+		panic(err)
+	}
+	log.Println("decodejson.decode.success")
+	return jsdata
 }
 
 func loadConfigs() {

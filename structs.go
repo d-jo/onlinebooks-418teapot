@@ -2,6 +2,7 @@ package main
 
 // This file holds the structs
 
+// Listing stores information on listings
 type Listing struct {
 	ID              int     `json:"id"`
 	Title           string  `json:"title"`
@@ -17,7 +18,8 @@ type Listing struct {
 	ShippingInfo    string  `json:"shipping_info"`
 }
 
-type GenericJson struct {
+// GenericJSON is used to read arbitrary JSON as a map
+type GenericJSON struct {
 	Data map[string]int `json:"data"`
 }
 

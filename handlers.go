@@ -9,7 +9,6 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 // CreateListingHandler POST T5
 func CreateListingHandler(w http.ResponseWriter, r *http.Request) {
-
 }
 
 // PublicListingDataHandler GET T6
