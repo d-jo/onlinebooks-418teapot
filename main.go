@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -122,4 +123,10 @@ func main() {
 	rootRouter.HandleFunc("/listing/{listing_id}/purchase", PurchaseListingHandler)
 
 	rootRouter.HandleFunc("/", IndexHandler)
+
+	// register the router
+	http.Handle("/", rootRouter)
+
+	// start listening
+	http.ListenAndServe(fmt.Sprintf("%s:%s", Config.WebHost, Config.WebPort), nil)
 }
