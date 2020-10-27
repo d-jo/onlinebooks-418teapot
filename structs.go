@@ -3,6 +3,18 @@ package main
 // This file holds the structs
 
 type Listing struct {
+	ID              int     `json:"id"`
+	Title           string  `json:"title"`
+	Description     string  `json:"description"`
+	ISBN            string  `json:"isbn"`
+	Price           float32 `json:"price"`
+	Category        string  `json:"category"`
+	SellerName      string  `json:"seller_name"`
+	ListingPassword string  `json:"listing_password"`
+	Status          string  `json:"status"`
+	Buyer           string  `json:"buyer"`
+	BillingInfo     string  `json:"billing_info"`
+	ShippingInfo    string  `json:"shipping_info"`
 }
 
 type GenericJson struct {

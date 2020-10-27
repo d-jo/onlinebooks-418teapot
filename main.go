@@ -78,11 +78,8 @@ func main() {
 	loadConfigs()
 	// initialize DB connection
 	InitDB()
-	SqlInits()
-
-	log.Println("Success running!")
-	log.Println(Creds)
-	log.Println(Config)
+	// Run startup queries
+	SQLInits()
 
 	// http
 	rootRouter := mux.NewRouter()
