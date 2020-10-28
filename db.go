@@ -39,5 +39,12 @@ func SQLInits() {
 }
 
 func (lst Listing) Insert() {
+	query := Config.SQLQueries["create_listing"]
+	arg := []interface{}{lst.Title, lst.Description, lst.ISBN, lst.Price, lst.Category, lst.SellerName}
+	stmt, _ := db.Prepare(query)
 
+	_, err := stmt.Exec(stmt, arg)
+	if err != nil {
+		panic(err)
+	}
 }
