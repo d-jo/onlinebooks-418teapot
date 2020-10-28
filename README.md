@@ -16,6 +16,16 @@ Before running the code, you should rename creds_sample.json to creds.json
 The config.json file stores configuration information and SQL,
  the creds.json file stores credentials. Look at structs.go to see what fields are available. The json:"" lets go know how to read and write json
 
+Setting up the SQL user :
+`CREATE USER 'onlinebooks'@'localhost' IDENTIFIED BY 'onlinepassword';`
+`GRANT ALL PRIVILEGES ON * . * TO  'onlinebooks'@'localhost';`
+`FLUSH PRIVILEGES;`
+`CREATE DATABASE onlinebooks`
+
+(you can change the username/password if you want, make sure it is correct in the creds.json)
+
+After creating the SQL user, edit the creds.json file with the correct username and password. If the creds.json file doesnt exist, copy the sample and rename it. Add you username and password.
+
 How to run the code: Using the terminal at the bottom of VSCode, you can do `go run github.com/onlinebooks-418teapot` to start the application.
 
 Workflow:
