@@ -1,0 +1,142 @@
+
+.centered {
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.identification {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  max-width: 960px;
+}
+
+.instructions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  max-width: 960px;
+}
+
+.flow-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.startbtn {
+  width: 25vw;
+  margin: 0 auto;
+}
+
+.limited {
+  max-width: 50%;
+  margin: 5px auto;
+}
+
+#identifier {
+  flex-grow: 11;
+}
+
+#identifier_label {
+  flex-grow: 1;
+  margin: 0 5px;
+}
+
+#identifier_confirm {
+  flex-grow: 11;
+}
+
+#identifier_confirm_label {
+  flex-grow: 1;
+  margin: 0 5px;
+}
+
+#displayed_phrase {
+  margin: 10px 0;
+  flex-grow: 1;
+}
+
+#phrase_input {
+  flex-grow: 1;
+  margin: auto;
+}
+
+.cent {
+  flex-grow: 6;
+  flex-direction: column;
+}
+
+.prep_phrase {
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 20px 0px;
+  height: 100%;
+}
+
+.type_phrase {
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 20px 0px;
+  height: 100%;
+}
+
+.dual_phrase {
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 20px 0px;
+  height: 100%;
+}
+
+.free_response {
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 20px 0px;
+  height: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+#wide {
+  margin: 10px auto;
+}
+
+body {
+  padding: 10px;
+  background: rgb(34,71,195);
+  background: linear-gradient(0deg, rgb(207, 207, 207) 0%, rgba(45,180,253,1) 100%); 
+  height: 100%;
+  width: 100%;
+}
+
+textarea {
+  margin: 15px;
+  width: 100%;
+}
+
+button {
+  margin: 15px;
+}
+
+h3 {
+  margin: 25px;
+}
+
+p {
+  margin: 15px;
+}
+
+h6 {
+  margin: 5px;
+  font-weight: bolder;
+}
+
+.instp {
+  margin: 5px;
+}
