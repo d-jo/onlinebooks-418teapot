@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"io"
 	"io/ioutil"
 	"log"
@@ -14,9 +15,23 @@ import (
 )
 
 var (
-	Creds  CredsStruct
-	Config ConfigStruct
+	Creds     CredsStruct
+	Config    ConfigStruct
+	templates *template.Template
 )
+
+// ReadTemplateFiles reads the template files into var
+func ReadTemplateFiles() {
+	log.Println("readtemplatefiles.read.start")
+	templates = template.Must(template.ParseGlob("templates/*.html"))
+	log.Println("readtemplatefiles.read.success")
+}
+
+// RenderSingleListingTemplate shows the page that loads a single
+// listing and renders the template
+func RenderSingleListingTemplate(w http.ResponseWriter, lst Listing) {
+	templates.ExecuteTemplate(w, "listing.html", lst)
+}
 
 // HashPassword hashes a password are returns the hash
 func HashPassword(password string) (string, error) {
@@ -102,6 +117,8 @@ func main() {
 	log.Println("server.init")
 	// load configs
 	loadConfigs()
+	// load templates
+	ReadTemplateFiles()
 	// initialize DB connection
 	InitDB()
 	// Run startup queries
@@ -113,15 +130,31 @@ func main() {
 	rootRouter.PathPrefix("/static/").Handler(http.StripPrefix("/static/", fs))
 
 	// JSON Endpoints
-	rootRouter.HandleFunc("/create_listing", CreateListingHandler)
-	rootRouter.HandleFunc("/listing/{listing_id}", PublicListingDataHandler)
-	rootRouter.HandleFunc("/listing/{listing_id}/update", UpdateListingHandler)
-	rootRouter.HandleFunc("/delete", DeleteListingHandler)
-	rootRouter.HandleFunc("/active", ActiveListingsHandler)
-	rootRouter.HandleFunc("/search", SearchListingsHandler)
-	rootRouter.HandleFunc("/private_details", PrivateListingDetailsHandler)
-	rootRouter.HandleFunc("/listing/{listing_id}/purchase", PurchaseListingHandler)
+	// loads page for creating a new listing
+	rootRouter.HandleFunc("/create_listing", CreateListingGETHandler).Methods("GET")
+	// POST new listing details, creates a new listing
+	rootRouter.HandleFunc("/create_listing", CreateListingPOSTHandler).Methods("POST")
 
+	// loads page for viewing a single listings, uses template to make page
+	rootRouter.HandleFunc("/listing/{listing_id}", PublicListingDataHandler).Methods("GET")
+
+	// endpoints for POSTs about a listing
+	// this endpoint takes JSON data of updated listing info and password, updates if pass is correct
+	rootRouter.HandleFunc("/listing/{listing_id}/update", UpdateListingHandler).Methods("POST")
+	// this endpoints takes just a password in the body and deletes if password is correct
+	rootRouter.HandleFunc("/listing/{listing_id}/delete", DeleteListingHandler).Methods("POST")
+	// this endpoint takes just a password and returns a JSON object with private details (buyer info)
+	rootRouter.HandleFunc("/listing/{listing_id}/private_details", PrivateListingDetailsHandler).Methods("POST")
+	// this endpoint takes buyer info (Buyer, BillingInfo, ShippingInfo)
+	rootRouter.HandleFunc("/listing/{listing_id}/purchase", PurchaseListingHandler).Methods("POST")
+
+	// returns list of Listings as JSON
+	rootRouter.HandleFunc("/active", ActiveListingsHandler).Methods("GET")
+	// returns list of Listings as JSON
+	rootRouter.HandleFunc("/search", SearchListingsHandler).Methods("POST")
+
+	// Loads index/browse
+	// sends static file ViewMultiple
 	rootRouter.HandleFunc("/", IndexHandler)
 
 	// register the router
