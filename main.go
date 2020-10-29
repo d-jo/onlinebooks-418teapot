@@ -29,8 +29,8 @@ func ReadTemplateFiles() {
 
 // RenderSingleListingTemplate shows the page that loads a single
 // listing and renders the template
-func RenderSingleListingTemplate(w http.ResponseWriter, lst Listing) {
-	templates.ExecuteTemplate(w, "listing.html", lst)
+func RenderSingleListingTemplate(w http.ResponseWriter, tmpl string, lst Listing) {
+	templates.ExecuteTemplate(w, tmpl, lst)
 }
 
 // HashPassword hashes a password are returns the hash
@@ -140,7 +140,8 @@ func main() {
 
 	// endpoints for POSTs about a listing
 	// this endpoint takes JSON data of updated listing info and password, updates if pass is correct
-	rootRouter.HandleFunc("/listing/{listing_id}/update", UpdateListingHandler).Methods("POST")
+	rootRouter.HandleFunc("/listing/{listing_id}/update", UpdateListingGETHandler).Methods("GET")
+	rootRouter.HandleFunc("/listing/{listing_id}/update", UpdateListingPOSTHandler).Methods("POST")
 	// this endpoints takes just a password in the body and deletes if password is correct
 	rootRouter.HandleFunc("/listing/{listing_id}/delete", DeleteListingHandler).Methods("POST")
 	// this endpoint takes just a password and returns a JSON object with private details (buyer info)
