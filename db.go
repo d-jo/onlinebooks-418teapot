@@ -39,12 +39,34 @@ func SQLInits() {
 }
 
 func (lst Listing) Insert() {
+	// get the statement from the config
 	query := Config.SQLQueries["create_listing"]
-	arg := []interface{}{lst.Title, lst.Description, lst.ISBN, lst.Price, lst.Category, lst.SellerName}
-	stmt, _ := db.Prepare(query)
+	// prepare the arguments using the lst paramater
+	arg := []interface{}{lst.Title, lst.Description, lst.ISBN, lst.Price, lst.Category, lst.SellerName, lst.ListingPassword, lst.Status}
+	// prepare the statement
+	//stmt, _ := db.Prepare(query)
+	log.Println(arg)
 
-	_, err := stmt.Exec(stmt, arg)
+	// execute the statement with the args in the array
+	_, err := db.Exec(query, arg...)
+	// error check
 	if err != nil {
 		panic(err)
 	}
 }
+
+//func SelectActive() []Listing {
+//}
+
+// TODO
+//func SelectPrivate(password string) Listing {
+//}
+
+// TODO
+//func Search(keyword string) {
+//}
+
+// TODO
+//func UpdateListing() {
+//
+//}
