@@ -20,7 +20,7 @@ type Listing struct {
 
 // GenericJSON is used to read arbitrary JSON as a map
 type GenericJSON struct {
-	Data map[string]int `json:"data"`
+	Data map[string]string `json:"data"`
 }
 
 // ConfigStruct struct holds non-sensitive information
