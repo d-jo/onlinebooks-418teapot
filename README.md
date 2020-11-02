@@ -16,6 +16,9 @@ Before running the code, you should rename creds_sample.json to creds.json
 The config.json file stores configuration information and SQL,
  the creds.json file stores credentials. Look at structs.go to see what fields are available. The json:"" lets go know how to read and write json
 
+
+
+If you want to create a local SQL user to use the SQL server on your machine, these steps below are for creating the user. Otherwise, you can use your EC2 MySQL credentials and it will work fine.
 Setting up the SQL user :
 
 `CREATE USER 'onlinebooks'@'localhost' IDENTIFIED BY 'onlinepassword';`
@@ -38,3 +41,17 @@ GitHub branch workflow
 https://guides.github.com/introduction/flow/
 
 
+Basic steps:
+`git checkout master`
+
+`git pull origin master`
+
+`git branch <insert new branch name here>`
+
+`git checkout <insert new branch name here>`
+
+Now you can do whatever changes, ect. Add/commit when you are satisfied, then 
+
+`git push origin <insert new branch name here>`
+
+To push the changes the the remote branch. From there, you will need to go to github and create a pull request with the new branch. Once accepted, there may be some steps required to merge.
