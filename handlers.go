@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -30,7 +31,17 @@ func CreateListingPOSTHandler(w http.ResponseWriter, r *http.Request) {
 	lst.ListingPassword = hash
 	log.Println("CAN INSERT")
 	log.Println(lst)
-	//lst.Insert()
+	newid, err := lst.Insert()
+	//w.Header().Set("new_id", string(newid))
+	if err != nil {
+		// write error
+		w.WriteHeader(503)
+		fmt.Fprintf(w, "%s", "Internal Server Error")
+	} else {
+		// good, send good response
+		w.WriteHeader(200)
+		fmt.Fprintf(w, "%d", newid)
+	}
 }
 
 // CreateListingGETHandler POST T5

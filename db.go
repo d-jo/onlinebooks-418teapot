@@ -38,7 +38,9 @@ func SQLInits() {
 	log.Println("sqlinits.inits.end")
 }
 
-func (lst Listing) Insert() {
+// Insert is called on a listing, and the data in that
+// instance of the object will be added to the database
+func (lst Listing) Insert() (int64, error) {
 	// get the statement from the config
 	query := Config.SQLQueries["create_listing"]
 	// prepare the arguments using the lst paramater
@@ -48,11 +50,12 @@ func (lst Listing) Insert() {
 	log.Println(arg)
 
 	// execute the statement with the args in the array
-	_, err := db.Exec(query, arg...)
+	res, err := db.Exec(query, arg...)
 	// error check
 	if err != nil {
 		panic(err)
 	}
+	return res.LastInsertId()
 }
 
 //func SelectActive() []Listing {
