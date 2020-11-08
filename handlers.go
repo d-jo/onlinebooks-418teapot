@@ -23,16 +23,20 @@ func CreateListingPOSTHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
+	log.Println(string(bytes))
 	err = json.Unmarshal(bytes, &lst)
 	log.Println(lst)
 	hash, err := HashPassword(lst.ListingPassword)
 	lst.ListingPassword = hash
+	log.Println("CAN INSERT")
+	log.Println(lst)
 	//lst.Insert()
 }
 
 // CreateListingGETHandler POST T5
 // serves the CreateListing page
 func CreateListingGETHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "./pages/create.html")
 }
 
 // PublicListingDataHandler GET T6
