@@ -55,8 +55,43 @@ func (lst Listing) Insert() {
 	}
 }
 
-//func SelectActive() []Listing {
-//}
+func SelectActive() []Listing {
+	// get the statement from the config
+	query := Config.SQLQueries["select_all_active_listings"]
+
+	// prepare the statement
+	//stmt, _ := db.Prepare(query)
+	log.Println()
+
+	// execute the query
+	results, err := db.Query(query)
+	// error check
+	if err != nil {
+		panic(err)
+	}	
+
+	var listings []Listing
+	var count = 0
+
+	for results.Next() {
+		var listing Listing
+		listings[count] = Listing{
+			Title: listing.Title, 
+			Description: listing.Description, 
+			ISBN: listing.ISBN, 
+			Price: listing.Price, 
+			Category: listing.Category, 
+			SellerName: listing.SellerName,
+		}
+
+		if err != nil {
+			panic(err)
+		}
+
+		count++
+	}
+	return listings
+}
 
 // TODO
 //func SelectPrivate(password string) Listing {
