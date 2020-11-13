@@ -75,14 +75,7 @@ func SelectActive() []Listing {
 
 	for results.Next() {
 		var listing Listing
-		listings[count] = Listing{
-			Title: listing.Title, 
-			Description: listing.Description, 
-			ISBN: listing.ISBN, 
-			Price: listing.Price, 
-			Category: listing.Category, 
-			SellerName: listing.SellerName,
-		}
+		listings[count] = listing
 
 		if err != nil {
 			panic(err)
