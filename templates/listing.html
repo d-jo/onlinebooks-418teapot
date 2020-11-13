@@ -1,10 +1,68 @@
 <html>
+  <head>
+    <title>{{.Title}} - OnlineBooks</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/listing.css">
+    <script src="/static/js/jquery-3.5.1.js"></script>
+    <script async defer src="/static/js/popper.min.js"></script>
+    <script async defer src="/static/js/bootstrap.js"></script>
+    <script>
+      const listing_price = {{.Price}};
+    </script>
+    <script src="/static/js/listing.js"></script>
+  </head>
   <body>
-    {{.Title}}
-    {{.Description}}
-    {{.ISBN}}
-    {{.Price}}
-    {{.Category}}
-    {{.SellerName}}
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">OnlineBooks</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Browse</a>
+          </li>
+        </ul>
+
+        <div class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" disabled>
+          <button class="btn btn-outline-success my-2 my-sm-0" disabled>Search</button>
+        </div>
+        
+      </div>
+    </nav>
+
+
+    <div class="row">
+      <div class="col"><h2 id="lst-title">{{.Title}}</h2></div>
+      <div class="col"></div>
+      <div class="col"></div>
+    </div>
+    <div class="row">
+      <div class="col-9 well">
+        <h5>Description</h5>
+        <p id="lst-desc">{{.Description}}</p>
+      </div>
+      <div class="col-3">
+        <div id="price-div" class="well">
+          <h5>Price</h5>
+          <h3 id="lst-price">${{.Price}}</h3>
+          <button class="btn btn-success" disabled>Purchase</button>
+        </div>
+
+        <div id="details-div" class="well">
+          <h5>Details</h5>
+          <p>Category: {{.Category}}</p>
+          <p>ISBN: {{.ISBN}}</p>
+          <p>Seller: {{.SellerName}}</p>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
   </body>
 </html>

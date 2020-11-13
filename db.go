@@ -92,6 +92,32 @@ func SelectActive() []Listing {
 	return listings
 }
 
+func SelectPublicListingDetails(id int) []Listing {
+	query := Config.SQLQueries["select_listing_public"]
+
+	res, err := db.Query(query, id)
+
+	if err != nil {
+		panic(err)
+	}
+
+	var listings []Listing
+
+	for res.Next() {
+		var listing Listing
+
+		err := res.Scan(&listing.ID, &listing.Title, &listing.Description, &listing.ISBN, &listing.Price, &listing.Category, &listing.SellerName)
+
+		if err != nil {
+			panic(err)
+		}
+
+		listings = append(listings, listing)
+	}
+
+	return listings
+}
+
 // TODO
 //func SelectPrivate(password string) Listing {
 //}
