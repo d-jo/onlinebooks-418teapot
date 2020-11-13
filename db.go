@@ -81,7 +81,7 @@ func SelectActive() []Listing {
 
 		err = results.Scan(&listing.Title, &listing.Description, &listing.ISBN, &listing.Price, &listing.Category, &listing.SellerName)
 
-		listings[count] = listing
+		listings = append(listings, listing)
 
 		if err != nil {
 			panic(err)

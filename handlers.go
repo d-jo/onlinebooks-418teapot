@@ -31,6 +31,7 @@ func CreateListingPOSTHandler(w http.ResponseWriter, r *http.Request) {
 	lst.ListingPassword = hash
 	log.Println("CAN INSERT")
 	log.Println(lst)
+	lst.Status = "active"
 	newid, err := lst.Insert()
 	//w.Header().Set("new_id", string(newid))
 	if err != nil {
