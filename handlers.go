@@ -100,10 +100,16 @@ func DeleteListingHandler(w http.ResponseWriter, r *http.Request) {
 
 // ActiveListingsHandler GET T9
 func ActiveListingsHandler(w http.ResponseWriter, r *http.Request) {
-
 	// uses the DB to get all active listings
+	activeListings := SelectActive()
 	// returns a json-encoded array of listings
-
+	js, err := json.Marshal(activeListings)
+	if err != nil {
+		// TODO not panic
+		panic(err)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
 }
 
 // SearchListingsHandler POST T10
