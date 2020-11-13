@@ -17,3 +17,14 @@ body {
   height: 100%;
   width: 100%;
 }
+
+.single-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: rgb(207, 207, 207);
+}
+
+.single-body {
+  background-color: rgb(107, 107, 107);
+}
