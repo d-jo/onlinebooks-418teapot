@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -23,16 +24,30 @@ func CreateListingPOSTHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
+	log.Println(string(bytes))
 	err = json.Unmarshal(bytes, &lst)
 	log.Println(lst)
 	hash, err := HashPassword(lst.ListingPassword)
 	lst.ListingPassword = hash
-	//lst.Insert()
+	log.Println("CAN INSERT")
+	log.Println(lst)
+	newid, err := lst.Insert()
+	//w.Header().Set("new_id", string(newid))
+	if err != nil {
+		// write error
+		w.WriteHeader(503)
+		fmt.Fprintf(w, "%s", "Internal Server Error")
+	} else {
+		// good, send good response
+		w.WriteHeader(200)
+		fmt.Fprintf(w, "%d", newid)
+	}
 }
 
 // CreateListingGETHandler POST T5
 // serves the CreateListing page
 func CreateListingGETHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "./pages/create.html")
 }
 
 // PublicListingDataHandler GET T6
