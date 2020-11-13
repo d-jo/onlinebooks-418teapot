@@ -6,6 +6,9 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
+
+	"github.com/gorilla/mux"
 )
 
 // IndexHandler serves the static index page
@@ -55,10 +58,32 @@ func CreateListingGETHandler(w http.ResponseWriter, r *http.Request) {
 // uses template to serve public listing data page
 func PublicListingDataHandler(w http.ResponseWriter, r *http.Request) {
 	// use the lines below to get the data from URL {listing_id}
-	//vars := mux.Vars(r)
-	//vars["listing_id"]
+	vars := mux.Vars(r)
+	selectedID := vars["listing_id"]
+
+	intID, err := strconv.Atoi(selectedID)
+
+	if err != nil {
+		// bad id
+		// TODO
+	}
+
+	if intID < 1 {
+		// bad id
+		// TODO
+	}
 
 	// get listing info from DB using ID
+	selectedListing := SelectPublicListingDetails(intID)
+
+	if len(selectedListing) == 0 {
+		// 404
+		w.WriteHeader(http.StatusNotFound)
+	} else {
+		// good
+		RenderSingleListingTemplate(w, "listing.html", selectedListing[0])
+	}
+
 	// call RenderSingleListingTemplate with tmpl=listing.html
 
 }

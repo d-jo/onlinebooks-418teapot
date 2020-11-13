@@ -1,0 +1,22 @@
+
+#price-div {
+  margin: 0px 0px 15px 0px;
+}
+
+#details-div {
+}
+
+body {
+  padding: 30px;
+}
+
+#lst-title {
+  margin-bottom: 20px;
+}
+
+.well {
+  padding: 5px;
+  background-color: blanchedalmond;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+}
