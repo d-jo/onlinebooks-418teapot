@@ -79,7 +79,7 @@ func SelectActive() []Listing {
 	for results.Next() {
 		var listing Listing
 
-		err = results.Scan(&listing.Title, &listing.Description, &listing.ISBN, &listing.Price, &listing.Category, &listing.SellerName)
+		err = results.Scan(&listing.ID, &listing.Title, &listing.Description, &listing.ISBN, &listing.Price, &listing.Category, &listing.SellerName)
 
 		listings = append(listings, listing)
 
