@@ -1,59 +1,86 @@
 <html>
   <head>
     <title>Create Listing</title>
-    <link rel="stylesheet" href="static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="static/css/index.css">
-    <script src="static/js/jquery-3.5.1.js"></script>
-    <script async defer src="static/js/popper.min.js"></script>
-    <script async defer src="static/js/bootstrap.js"></script>
-    <script src="static/js/create_listing.js"></script>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <script src="/static/js/jquery-3.5.1.js"></script>
+    <script async defer src="/static/js/popper.min.js"></script>
+    <script async defer src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/create_listing.js"></script>
   </head>
   <body>
-    <h1>Create Listing</h1>
-    <div>
-      <div class="form-group">
-        <label for="title">Listing Title:</label>
-        <input type="text" id="title" name="title">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">OnlineBooks</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Browse</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/create_listing">Create</a>
+          </li>
+        </ul>
+
+        <div class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" disabled>
+          <button class="btn btn-outline-success my-2 my-sm-0" disabled>Search</button>
+        </div>
+        
       </div>
-      <div class="form-group">
-        <label for="seller_name">Seller Name:</label>
-        <input type="text" id="seller_name" name="seller_name">
+    </nav>
+
+
+    <div class="container">
+      <h1>Create Listing</h1>
+      <div class="col">
+        <div class="form-group">
+          <label for="title">Listing Title:</label>
+          <input type="text" id="title" name="title" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="seller_name">Seller Name:</label>
+          <input type="text" id="seller_name" name="seller_name" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea id="description" name="description" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="isbn">ISBN:</label>
+          <input type="text" id="isbn" name="isbn" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="price">Price:</label>
+          <input type="text" id="price" name="price" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="category">Category:</label>
+          <select class="form-control" id="category" name="category">
+            <option>Art</option>
+            <option>Biography/Autobiography</option>
+            <option>Business</option>
+            <option>Computer Science</option>
+            <option>Educational</option>
+            <option>Fiction</option>
+            <option>History</option>
+            <option>Law</option>
+            <option>Mathematics</option>
+            <option>Medical</option>
+            <option>Music</option>
+            <option>Philosophy</option>
+            <option>Science</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="listing_password">Listing Password:</label>
+          <input type="password" id="listing_password" name="listing_password" class="form-control">
+        </div>
+        <button onclick="submit_form()" class='btn btn-success'>Submit</button>
       </div>
-      <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea id="description" name="description"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="isbn">ISBN:</label>
-        <input type="text" id="isbn" name="isbn">
-      </div>
-      <div class="form-group">
-        <label for="price">Price:</label>
-        <input type="text" id="price" name="price">
-      </div>
-      <div class="form-group">
-        <label for="category">Category:</label>
-        <select class="form-control" id="category" name="category">
-          <option>Art</option>
-          <option>Biography/Autobiography</option>
-          <option>Business</option>
-          <option>Computers</option>
-          <option>Educational</option>
-          <option>Fiction</option>
-          <option>History</option>
-          <option>Law</option>
-          <option>Mathematics</option>
-          <option>Medical</option>
-          <option>Music</option>
-          <option>Philosophy</option>
-          <option>Science</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="listing_password">Listing Password:</label>
-        <input type="password" id="listing_password" name="listing_password">
-      </div>
-      <button onclick="submit_form()">Submit</button>
     </div>
   </body>
 </html>
