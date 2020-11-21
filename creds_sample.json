@@ -1,4 +1,4 @@
 {
-  "db_user": "user",
-  "db_pass": "pass"
+  "db_user": "newmysqlremoteuser",
+  "db_pass": "mypassword"
 }
