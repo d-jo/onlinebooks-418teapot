@@ -123,8 +123,32 @@ func SelectPublicListingDetails(id int) []Listing {
 //}
 
 // TODO
-//func Search(keyword string) {
-//}
+func Search(keyword string) []Listing {
+	log.Println(keyword)
+
+	query := Config.SQLQueries["search_listings"]
+
+	results, err := db.Query(query)
+
+	//results, err := db.Query("SELECT * FROM Listings WHERE title LIKE '%?%' OR description LIKE '%?%' OR isbn LIKE '%?%'")
+
+	if err != nil {
+		panic(err.Error())
+	}
+	var books []Listing
+	for results.Next() {
+		var book Listing
+
+		err = results.Scan(&book.ID, &book.Title, &book.Description, &book.ISBN, &book.Price, &book.Category, &book.SellerName, &book.ListingPassword, &book.Status, &book.Buyer, &book.BillingInfo, &book.ShippingInfo)
+		if err != nil {
+			panic(err)
+		}
+
+		books = append(books, book)
+	}
+
+	return books
+}
 
 // TODO
 //func UpdateListing() {

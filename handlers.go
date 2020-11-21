@@ -140,10 +140,19 @@ func ActiveListingsHandler(w http.ResponseWriter, r *http.Request) {
 
 // SearchListingsHandler POST T10
 func SearchListingsHandler(w http.ResponseWriter, r *http.Request) {
-
 	// uses get keyword from body
 	// execute search query on SQL
-	// return json-encoded array of listings
+	// return json-encoded array of list
+	keyword := "test"
+	searchResults := Search(keyword)
+	js, err := json.Marshal(searchResults)
+	if err != nil {
+		panic(err)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
+	fmt.Println(keyword)
+
 }
 
 // PrivateListingDetailsHandler POST T11

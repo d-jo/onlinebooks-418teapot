@@ -152,7 +152,7 @@ func main() {
 	// returns list of Listings as JSON
 	rootRouter.HandleFunc("/active", ActiveListingsHandler).Methods("GET")
 	// returns list of Listings as JSON
-	rootRouter.HandleFunc("/search", SearchListingsHandler).Methods("POST")
+	rootRouter.HandleFunc("/search", SearchListingsHandler).Methods("GET")
 
 	// Loads index/browse
 	// sends static file ViewMultiple
