@@ -55,6 +55,35 @@ func (lst Listing) Insert() {
 	}
 }
 
+// TODO
+func UpdateListing(listingID string) {
+	// get the statement from the config
+	//query := Config.SQLQueries["update_listing"]
+	// prepare the arguments using the lst paramater
+
+	var tag Listing
+
+	//not really sure what we are updating or how we are gettin the info
+	//so essentially just change this test var to whatever is getting updated
+	var test = "I just changed it"
+
+	// Execute the query
+
+	//old query that just selects the book based on id
+	//err := db.QueryRow("SELECT id, title, description, isbn, price, category, seller, listing_password, status FROM Listings where id = ?", listingID).Scan(&tag.ID, &tag.Title, &tag.Description, &tag.ISBN, &tag.Price, &tag.Category, &tag.SellerName, &tag.ListingPassword, &tag.Status)
+
+	//actual query to seupdate a title
+	err := db.QueryRow("UPDATE Listings SET title = ? WHERE id = ?", test, listingID).Scan(&tag.Title)
+
+	if err != nil {
+		panic(err.Error()) // proper error handling instead of panic in your app
+	}
+
+	log.Println(tag)
+	log.Println(tag.Title)
+
+}
+
 //func SelectActive() []Listing {
 //}
 
@@ -63,10 +92,25 @@ func (lst Listing) Insert() {
 //}
 
 // TODO
-//func Search(keyword string) {
-//}
+func Search(keyword string) {
 
-// TODO
-//func UpdateListing() {
-//
-//}
+	log.Println(keyword)
+
+	results, err := db.Query("SELECT * FROM Listings WHERE title LIKE '%?%'OR description LIKE '%?%'OR isbn LIKE '%?%'OR category LIKE '%?%'OR seller LIKE '%?%'", keyword, keyword, keyword, keyword, keyword)
+
+	if err != nil {
+		panic(err.Error()) // proper error handling instead of panic in your app
+	}
+
+	for results.Next() {
+		var book Listing
+		//for each row, scan the result into our Listing obj
+		err = results.Scan(&book.ID, &book.Title, &book.Description, &book.ISBN, &book.Price, &book.Category, &book.SellerName, &book.ListingPassword, &book.Status)
+		if err != nil {
+			panic(err.Error())
+		}
+		log.Printf(book.Title)
+
+	}
+
+}

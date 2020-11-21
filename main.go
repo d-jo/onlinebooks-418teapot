@@ -93,7 +93,7 @@ func loadConfigs() {
 
 	log.Println("loadconfig.creds.start_load")
 	// get handler to cred file
-	credFle, err := os.Open("creds.json")
+	credFle, err := os.Open("creds_sample.json")
 	if err != nil {
 		log.Println("loadconfig.creds.fail_handle")
 		panic(err)

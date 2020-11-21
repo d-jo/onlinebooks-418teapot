@@ -2,9 +2,12 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 // IndexHandler serves the static index page
@@ -52,10 +55,14 @@ func PublicListingDataHandler(w http.ResponseWriter, r *http.Request) {
 // similar to PublicListingDataHandler
 func UpdateListingGETHandler(w http.ResponseWriter, r *http.Request) {
 	// use the lines below to get the data from URL {listing_id}
-	//vars := mux.Vars(r)
+	vars := mux.Vars(r)
 	//vars["listing_id"]
+	listingID := vars["listing_id"]
+	fmt.Print(listingID)
+	UpdateListing(listingID)
 
 	// get the listing details from database
+	//sqlQuery = "SELECT title,description,isbn,price,category,seller_name FROM Listings WHERE id = '" + listingID + "'"
 	// use RenderSingleListingTemplate with tmpl=update.html
 
 }
@@ -96,7 +103,13 @@ func SearchListingsHandler(w http.ResponseWriter, r *http.Request) {
 
 	// uses get keyword from body
 	// execute search query on SQL
+	//sqlStatement := `SELECT id, Title FROM Listings WHERE id=$1;`
 	// return json-encoded array of listings
+	vars := mux.Vars(r)
+	//vars["listing_id"]
+	listingID := vars["listing_id"]
+	fmt.Print(listingID)
+	Search(listingID)
 }
 
 // PrivateListingDetailsHandler POST T11
