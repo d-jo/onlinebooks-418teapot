@@ -7,6 +7,7 @@
     <script async defer src="static/js/popper.min.js"></script>
     <script async defer src="static/js/bootstrap.js"></script>
     <script src="static/js/index.js"></script>
+    <script src="/static/js/search_listings.js"></script>
   </head>
   <body>
     
@@ -27,9 +28,9 @@
           </ul>
 
           <div class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" >
-            <button class="btn btn-outline-success my-2 my-sm-0" >Search</button>
-             <a class="nav-link" href="/search">Searc</a>
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id = "search">
+            <button onclick="search()">New button</button>
+            <a class="btn btn-outline-success my-2 my-sm-0" href = "/search" role = "button" onclick="search()">Search</a>    
           </div>
           
         </div>

@@ -143,8 +143,16 @@ func SearchListingsHandler(w http.ResponseWriter, r *http.Request) {
 	// uses get keyword from body
 	// execute search query on SQL
 	// return json-encoded array of list
-	keyword := "test"
-	searchResults := Search(keyword)
+	var keyword GenericJSON
+	bytes, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		panic(err)
+	}
+	log.Println(string(bytes))
+	err = json.Unmarshal(bytes, keyword)
+	log.Println(keyword.Data["data"])
+
+	searchResults := Search("hi")
 	js, err := json.Marshal(searchResults)
 	if err != nil {
 		panic(err)
