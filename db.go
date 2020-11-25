@@ -128,7 +128,7 @@ func Search(keyword string) []Listing {
 
 	query := Config.SQLQueries["search_listings"]
 
-	results, err := db.Query(query)
+	results, err := db.Query(query, keyword)
 
 	//results, err := db.Query("SELECT * FROM Listings WHERE title LIKE '%?%' OR description LIKE '%?%' OR isbn LIKE '%?%'")
 
@@ -145,6 +145,7 @@ func Search(keyword string) []Listing {
 		}
 
 		books = append(books, book)
+		log.Println(book.Title)
 	}
 
 	return books
