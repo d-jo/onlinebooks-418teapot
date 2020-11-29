@@ -160,7 +160,21 @@ func PrivateListingDetailsHandler(w http.ResponseWriter, r *http.Request) {
 // PurchaseListingHandler POST T12
 func PurchaseListingHandler(w http.ResponseWriter, r *http.Request) {
 	// use the lines below to get the data from URL {listing_id}
-	//vars := mux.Vars(r)
-	//vars["listing_id"]
+	vars := mux.Vars(r)
+	
+	var lst Listing
+	bytes, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		panic(err)
+	}
+	log.Println(string(bytes))
+	err = json.Unmarshal(bytes, &lst)
+	log.Println(lst)
+	lst.Status = "purchased"
+	lst.Buyer = vars["buyer"]
+	lst.ShippingInfo = vars["shipping_info"]
+	lst.BillingInfo = vars["billing_info"]
+	lst.ID, err = strconv.Atoi(vars["listing id"])
 
+	PurchaseListing(lst.Buyer, lst.BillingInfo, lst.ShippingInfo, lst.ID)
 }

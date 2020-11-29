@@ -130,3 +130,13 @@ func SelectPublicListingDetails(id int) []Listing {
 //func UpdateListing() {
 //
 //}
+
+func PurchaseListing(buyer string, billInfo string, shipInfo string, id int) {
+	query := Config.SQLQueries["purchase_listing"]
+
+	_, err := db.Query(query, buyer, billInfo, shipInfo, id)
+
+	if err != nil {
+		panic(err)
+	}
+}
