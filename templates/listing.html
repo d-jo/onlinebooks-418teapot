@@ -8,6 +8,7 @@
     <script async defer src="/static/js/bootstrap.js"></script>
     <script>
       const listing_price = {{.Price}};
+      const listing_id = {{.ID}};
     </script>
     <script src="/static/js/listing.js"></script>
   </head>
@@ -53,7 +54,10 @@
         <div id="price-div" class="well">
           <h5>Price</h5>
           <h3 id="lst-price">${{.Price}}</h3>
-          <button class="btn btn-success" disabled>Purchase</button>
+          <input type="text" id="buyer_name" placeholder="Buyer Name">
+          <input type="text" id="buyer_billing" placeholder="Billing Info">
+          <input type="text" id="buyer_shipping" placeholder="Shipping Info">
+          <button class="btn btn-success" onclick="purchase()">Purchase</button>
         </div>
 
         <div id="details-div" class="well">
@@ -61,6 +65,7 @@
           <p>Category: {{.Category}}</p>
           <p>ISBN: {{.ISBN}}</p>
           <p>Seller: {{.SellerName}}</p>
+          <!--Add password textbox and delete button here-->
         </div>
       </div>
     </div>

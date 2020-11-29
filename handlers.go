@@ -161,20 +161,19 @@ func PrivateListingDetailsHandler(w http.ResponseWriter, r *http.Request) {
 func PurchaseListingHandler(w http.ResponseWriter, r *http.Request) {
 	// use the lines below to get the data from URL {listing_id}
 	vars := mux.Vars(r)
+	log.Println("listing.purchase")
 
 	var lst Listing
 	bytes, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		panic(err)
 	}
-	log.Println(string(bytes))
 	err = json.Unmarshal(bytes, &lst)
-	log.Println(lst)
 	lst.Status = "purchased"
-	lst.ID, err = strconv.Atoi(vars["listing id"])
+	lst.ID, err = strconv.Atoi(vars["listing_id"])
 
 	if err != nil {
-		fmt.Fprintf(w, "false")
+		fmt.Fprintf(w, "fail")
 
 	} else {
 		if lst.ID > -1 {
