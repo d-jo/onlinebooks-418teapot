@@ -79,7 +79,7 @@ func SelectActive() []Listing {
 	for results.Next() {
 		var listing Listing
 
-		err = results.Scan(&listing.ID, &listing.Title, &listing.Description, &listing.ISBN, &listing.Price, &listing.Category, &listing.SellerName)
+		err = results.Scan(&listing.ID, &listing.Title, &listing.Description, &listing.ISBN, &listing.Price, &listing.Category, &listing.SellerName, &listing.Status)
 
 		listings = append(listings, listing)
 
@@ -130,3 +130,13 @@ func SelectPublicListingDetails(id int) []Listing {
 //func UpdateListing() {
 //
 //}
+
+func PurchaseListing(buyer string, billInfo string, shipInfo string, id int) {
+	query := Config.SQLQueries["purchase_listing"]
+
+	_, err := db.Query(query, buyer, billInfo, shipInfo, id)
+
+	if err != nil {
+		panic(err)
+	}
+}

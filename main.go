@@ -147,7 +147,7 @@ func main() {
 	// this endpoint takes just a password and returns a JSON object with private details (buyer info)
 	rootRouter.HandleFunc("/listing/{listing_id}/private_details", PrivateListingDetailsHandler).Methods("POST")
 	// this endpoint takes buyer info (Buyer, BillingInfo, ShippingInfo)
-	rootRouter.HandleFunc("/listing/{listing_id}/purchase", PurchaseListingHandler).Methods("POST")
+	rootRouter.HandleFunc("/listing/purchase/{listing_id}", PurchaseListingHandler).Methods("POST")
 
 	// returns list of Listings as JSON
 	rootRouter.HandleFunc("/active", ActiveListingsHandler).Methods("GET")
@@ -162,5 +162,5 @@ func main() {
 	http.Handle("/", rootRouter)
 
 	// start listening
-	http.ListenAndServe(fmt.Sprintf("%s:%s", Config.WebHost, Config.WebPort), nil)
+	http.ListenAndServe(fmt.Sprintf(":%s", Config.WebPort), nil)
 }
