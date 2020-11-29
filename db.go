@@ -118,9 +118,43 @@ func SelectPublicListingDetails(id int) []Listing {
 	return listings
 }
 
+//SelectPassword function will call select_password query in config.json
+//parameter: id. type int
+//return value: the hash. type string
+func SelectPassword(id int) string {
+
+	query := Config.SQLQueries["select_password"]
+
+	var hash string
+
+	err := db.QueryRow(query, id).Scan(&hash) //Scan puts the result into the variable hash
+
+	if err != nil {
+		panic(err)
+	}
+	//log.Println("inside the SelectPassword function. The returned hash value is " + hash + "\n")
+	return hash
+}
+
+//DeleteListing deletes a listing with a specific id.
+func DeleteListing(id int) {
+
+	query := Config.SQLQueries["delete_listing"]
+
+	_, err := db.Query(query, id)
+
+	if err != nil {
+		panic(err.Error())
+	} else {
+		log.Println("DELETE LISTING in db.go SUCCESSFUL \n")
+	}
+
+}
+
 // TODO
-//func SelectPrivate(password string) Listing {
-//}
+// func SelectPrivate(password string) Listing {
+
+// }
 
 // TODO
 //func Search(keyword string) {

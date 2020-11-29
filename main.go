@@ -143,7 +143,7 @@ func main() {
 	rootRouter.HandleFunc("/listing/{listing_id}/update", UpdateListingGETHandler).Methods("GET")
 	rootRouter.HandleFunc("/listing/{listing_id}/update", UpdateListingPOSTHandler).Methods("POST")
 	// this endpoints takes just a password in the body and deletes if password is correct
-	rootRouter.HandleFunc("/listing/{listing_id}/delete", DeleteListingHandler).Methods("POST")
+	rootRouter.HandleFunc("/listing/delete/{listing_id}", DeleteListingHandler).Methods("POST")
 	// this endpoint takes just a password and returns a JSON object with private details (buyer info)
 	rootRouter.HandleFunc("/listing/{listing_id}/private_details", PrivateListingDetailsHandler).Methods("POST")
 	// this endpoint takes buyer info (Buyer, BillingInfo, ShippingInfo)

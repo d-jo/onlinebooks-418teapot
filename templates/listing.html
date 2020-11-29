@@ -8,6 +8,8 @@
     <script async defer src="/static/js/bootstrap.js"></script>
     <script>
       const listing_price = {{.Price}};
+      const listing_id = {{.ID}};
+
     </script>
     <script src="/static/js/listing.js"></script>
   </head>
@@ -61,6 +63,13 @@
           <p>Category: {{.Category}}</p>
           <p>ISBN: {{.ISBN}}</p>
           <p>Seller: {{.SellerName}}</p>
+          <!-- add password text and delete button here -->
+          <div class="form-group">
+            <label for="listing_password">Enter password to delete listing:</label>
+            <input type="password" id="listing_password" name="listing_password" class="form-control">
+          </div>
+          <button onclick="submit_form_password()" class='btn btn-success'>Delete</button>
+
         </div>
       </div>
     </div>
