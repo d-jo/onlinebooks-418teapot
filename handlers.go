@@ -31,6 +31,7 @@ func CreateListingPOSTHandler(w http.ResponseWriter, r *http.Request) {
 	err = json.Unmarshal(bytes, &lst)
 	log.Println(lst)
 	hash, err := HashPassword(lst.ListingPassword)
+	fmt.Println(lst.Title) //take out later
 	lst.ListingPassword = hash
 	log.Println("CAN INSERT")
 	log.Println(lst)
@@ -114,14 +115,54 @@ func UpdateListingPOSTHandler(w http.ResponseWriter, r *http.Request) {
 
 // DeleteListingHandler POST T8
 func DeleteListingHandler(w http.ResponseWriter, r *http.Request) {
-	// use the lines below to get the data from URL {listing_id}
-	//vars := mux.Vars(r)
-	//vars["listing_id"]
+	//get the listing ID
+	vars := mux.Vars(r)
+	selectedID := vars["listing_id"]
+	intID, err := strconv.Atoi(selectedID)
+	//log.Printf("inside the deleteLIstinghandler. intID is %d \n", intID)
 
-	// decode password from body
-	// check password is correct
-	// if password is correct, delete listing with id
+	var lst Listing
+	bytes, err := ioutil.ReadAll(r.Body)
 
+	if err != nil {
+		panic(err)
+	}
+	//log.Println("Printing string(btyes) in delete handler:")
+	log.Println(string(bytes))
+
+	err = json.Unmarshal(bytes, &lst)
+	log.Println(lst)
+	//log.Printf("The password in the delete handler is %s", lst.ListingPassword)
+
+	if err != nil {
+		fmt.Fprintf(w, "fail")
+	} else {
+		passwordIn := lst.ListingPassword
+
+		//call SelectPassword get the hash of the Listing with intID.
+		hashToCheckAgainst := SelectPassword(intID)
+		//log.Printf("hashToCheckAgainst(the result of SelectPassword) is %s \n", hashToCheckAgainst)
+
+		// check password is correct
+		passwordIsCorrect := ComparePassword(passwordIn, hashToCheckAgainst)
+
+		//log.Printf("the result of ComparePassword is %t \n", passwordIsCorrect)
+
+		// if password is correct, delete listing with id
+		if passwordIsCorrect == true {
+			//log.Println("password matches. It should delete listing\n")
+
+			DeleteListing(intID) //delete the listing from table
+
+			w.WriteHeader(200)
+			fmt.Fprintf(w, "%t", true)
+			log.Println("CAN DELETE \n")
+
+		} else { // wrong password
+			w.WriteHeader(200)
+			fmt.Fprintf(w, "%t", false)
+		}
+	}
 }
 
 // ActiveListingsHandler GET T9

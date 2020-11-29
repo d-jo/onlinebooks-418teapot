@@ -14,7 +14,8 @@
     "create_listing": "INSERT INTO Listings (title, description, isbn, price, category, seller, listing_password, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
     "search_listings": "",
     "update_listing": "",
-    "delete_listing": "",
+    "delete_listing": "DELETE FROM Listings WHERE id = ?",
+    "select_password":"SELECT listing_password FROM Listings WHERE id=? LIMIT 1",
     "purchase_listing": "UPDATE Listings SET status=\"purchased\", buyer=?, billing_info=?, shipping_info=? WHERE id=?"
   }
 }
