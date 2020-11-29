@@ -8,7 +8,7 @@
     "CREATE TABLE IF NOT EXISTS Listings (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, title TEXT NOT NULL, description TEXT NOT NULL, isbn TEXT NOT NULL, price DECIMAL(13,4) NOT NULL, category TEXT NOT NULL, seller TEXT NOT NULL, listing_password TEXT NOT NULL, status TEXT NOT NULL, buyer TEXT, billing_info TEXT, shipping_info TEXT)"
   ],
   "sql_queries": {
-    "select_all_active_listings": "SELECT id,title,description,isbn,price,category,seller FROM Listings WHERE status='active'",
+    "select_all_active_listings": "SELECT id,title,description,isbn,price,category,seller,status FROM Listings WHERE status='active' OR status='purchased'",
     "select_listing_public": "SELECT id,title,description,isbn,price,category,seller FROM Listings WHERE id=? LIMIT 1",
     "select_listing_private": "",
     "create_listing": "INSERT INTO Listings (title, description, isbn, price, category, seller, listing_password, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
