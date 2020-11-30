@@ -1,12 +1,14 @@
 
 function loadListings(data) {
-  console.log("success")
-  console.log(data)
+  $("#listings").empty();
+  console.log("success");
+  console.log(data);
   for (let i = 0; i < data.length; i++) {
 
     var listing_tmpl = `<div class='single-container'>
       <div class='single-header'>
         <a href='/listing/${data[i]['id']}' class='h3 lst-title'>${data[i]['title']}</a>
+        <b class='h4 lst-status'>${data[i]['status']}</b>
       </div>
       <div class='single-body'>
         <div class='row'>
