@@ -106,7 +106,7 @@ func SelectPublicListingDetails(id int) []Listing {
 	for res.Next() {
 		var listing Listing
 
-		err := res.Scan(&listing.ID, &listing.Title, &listing.Description, &listing.ISBN, &listing.Price, &listing.Category, &listing.SellerName)
+		err := res.Scan(&listing.ID, &listing.Title, &listing.Description, &listing.ISBN, &listing.Price, &listing.Category, &listing.SellerName, &listing.Status)
 
 		if err != nil {
 			panic(err)

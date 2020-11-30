@@ -9,7 +9,7 @@
   ],
   "sql_queries": {
     "select_all_active_listings": "SELECT id,title,description,isbn,price,category,seller,status FROM Listings WHERE status='active' OR status='purchased'",
-    "select_listing_public": "SELECT id,title,description,isbn,price,category,seller FROM Listings WHERE id=? LIMIT 1",
+    "select_listing_public": "SELECT id,title,description,isbn,price,category,seller,status FROM Listings WHERE id=? LIMIT 1",
     "select_listing_private": "",
     "create_listing": "INSERT INTO Listings (title, description, isbn, price, category, seller, listing_password, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
     "search_listings": "",

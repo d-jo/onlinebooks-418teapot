@@ -20,14 +20,15 @@ function purchase() {
     url: "/listing/purchase/" + listing_id,
     data: JSON.stringify(dataObj),
     success: (o) => {
-      console.log("succ")
+      console.log("success");
       console.log(o);
-      alert("success")
+      alert("The listing has been purchased");
+      location.reload();
     },
     error: (err) => {
       console.log("err")
       console.log(err)
-      alert("fail")
+      alert("Unexptected server error")
     },
     dataType: "json"
   })
@@ -77,5 +78,13 @@ $(() => {
   console.log(listing_price)
 
   $("#lst-price").text(formatPrice(listing_price));
+
+  if (status == "purchased") {
+    $("#buyer_name").remove();
+    $("#buyer_billing").remove();
+    $("#buyer_shipping").remove();
+    $("#purchase-btn").remove();
+
+  }
 })
 

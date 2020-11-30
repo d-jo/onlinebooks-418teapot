@@ -9,6 +9,7 @@
     <script>
       const listing_price = {{.Price}};
       const listing_id = {{.ID}};
+      const status = {{.Status}};
     </script>
     <script src="/static/js/listing.js"></script>
   </head>
@@ -57,11 +58,12 @@
           <input type="text" id="buyer_name" placeholder="Buyer Name">
           <input type="text" id="buyer_billing" placeholder="Billing Info">
           <input type="text" id="buyer_shipping" placeholder="Shipping Info">
-          <button class="btn btn-success" onclick="purchase()">Purchase</button>
+          <button id="purchase-btn" class="btn btn-success" onclick="purchase()">Purchase</button>
         </div>
 
         <div id="details-div" class="well">
           <h5>Details</h5>
+          <p>Status: {{.Status}}</p>
           <p>Category: {{.Category}}</p>
           <p>ISBN: {{.ISBN}}</p>
           <p>Seller: {{.SellerName}}</p>
