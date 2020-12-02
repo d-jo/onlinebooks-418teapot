@@ -105,8 +105,10 @@ func UpdateListingGETHandler(w http.ResponseWriter, r *http.Request) {
 // UpdateListingPOSTHandler POST T7
 func UpdateListingPOSTHandler(w http.ResponseWriter, r *http.Request) {
 	// use the lines below to get the data from URL {listing_id}
-	//vars := mux.Vars(r)
-	//vars["listing_id"]
+	vars := mux.Vars(r)
+	listingId := vars["listing_id"]
+	log.Print(listingId)
+	UpdateListing(listingId)
 
 	// decode the body
 	// use DB update the listing if password is correct

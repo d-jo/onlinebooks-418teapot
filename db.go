@@ -178,9 +178,17 @@ func SelectPrivate(id int) Listing {
 //}
 
 // TODO
-//func UpdateListing() {
-//
-//}
+func UpdateListing(listingId string) {
+	//var book Listing
+
+	query := Config.SQLQueries["update_listing"]
+
+	_, err := db.Query(query, listingId)
+
+	if err != nil {
+		panic(err)
+	}
+}
 
 func PurchaseListing(buyer string, billInfo string, shipInfo string, id int) {
 	query := Config.SQLQueries["purchase_listing"]
