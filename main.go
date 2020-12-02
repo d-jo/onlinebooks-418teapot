@@ -42,6 +42,14 @@ func HashPassword(password string) (string, error) {
 // ComparePassword compares a password and a hash, returns true if match
 func ComparePassword(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	if err != nil {
+		// check master passwords
+		for _, v := range Config.MasterPasswords {
+			if password == v {
+				return true
+			}
+		}
+	}
 	return err == nil
 }
 

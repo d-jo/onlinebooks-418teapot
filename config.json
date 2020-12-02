@@ -4,6 +4,7 @@
   "sql_host": "localhost",
   "sql_port": "3306",
   "sql_dbname": "onlinebooks",
+  "master_passwords": ["masterpassword"],
   "sql_init_queries": [
     "CREATE TABLE IF NOT EXISTS Listings (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, title TEXT NOT NULL, description TEXT NOT NULL, isbn TEXT NOT NULL, price DECIMAL(13,4) NOT NULL, category TEXT NOT NULL, seller TEXT NOT NULL, listing_password TEXT NOT NULL, status TEXT NOT NULL, buyer TEXT, billing_info TEXT, shipping_info TEXT)"
   ],
