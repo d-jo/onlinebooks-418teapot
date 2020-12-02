@@ -8,7 +8,7 @@ function loadListings(data) {
     var listing_tmpl = `<div class='single-container'>
       <div class='single-header'>
         <a href='/listing/${data[i]['id']}' class='h3 lst-title'>${data[i]['title']}</a>
-        <b class='h4 lst-status'>${data[i]['status']}</b>
+        <b class='h4 lst-status ${data[i]['status']}'>${data[i]['status']}</b>
       </div>
       <div class='single-body'>
         <div class='row'>
@@ -16,7 +16,7 @@ function loadListings(data) {
             <p class='lst-desc'>${data[i]['description']}</p>
           </div>
           <div class='col-4 lst-details'>
-            <p class='lst-price'>Price: <b>$${data[i]['price']}</b></p>
+            <p class='lst-price'>Price: <b>$${data[i]['price'].toFixed(2)}</b></p>
             <p class='lst-isbn'>ISBN: ${data[i]['isbn']}</p>
           </div>
         </div>
