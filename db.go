@@ -79,7 +79,7 @@ func SelectActive() []Listing {
 	for results.Next() {
 		var listing Listing
 
-		err = results.Scan(&listing.ID, &listing.Title, &listing.Description, &listing.ISBN, &listing.Price, &listing.Category, &listing.SellerName)
+		err = results.Scan(&listing.ID, &listing.Title, &listing.Description, &listing.ISBN, &listing.Price, &listing.Category, &listing.SellerName, &listing.Status)
 
 		listings = append(listings, listing)
 
@@ -106,7 +106,7 @@ func SelectPublicListingDetails(id int) []Listing {
 	for res.Next() {
 		var listing Listing
 
-		err := res.Scan(&listing.ID, &listing.Title, &listing.Description, &listing.ISBN, &listing.Price, &listing.Category, &listing.SellerName)
+		err := res.Scan(&listing.ID, &listing.Title, &listing.Description, &listing.ISBN, &listing.Price, &listing.Category, &listing.SellerName, &listing.Status)
 
 		if err != nil {
 			panic(err)
@@ -118,9 +118,60 @@ func SelectPublicListingDetails(id int) []Listing {
 	return listings
 }
 
-// TODO
-//func SelectPrivate(password string) Listing {
-//}
+//SelectPassword function will call select_password query in config.json
+//parameter: id. type int
+//return value: the hash. type string
+func SelectPassword(id int) string {
+
+	query := Config.SQLQueries["select_password"]
+
+	var hash string
+
+	err := db.QueryRow(query, id).Scan(&hash) //Scan puts the result into the variable hash
+
+	if err != nil {
+		panic(err)
+	}
+	//log.Println("inside the SelectPassword function. The returned hash value is " + hash + "\n")
+	return hash
+}
+
+//DeleteListing deletes a listing with a specific id.
+func DeleteListing(id int) {
+
+	query := Config.SQLQueries["delete_listing"]
+
+	_, err := db.Query(query, id)
+
+	if err != nil {
+		panic(err.Error())
+	} else {
+		log.Println("DELETE LISTING in db.go SUCCESSFUL \n")
+	}
+
+}
+
+// SelectPrivate selects private listing details and returns a listing
+func SelectPrivate(id int) Listing {
+	query := Config.SQLQueries["select_listing_private"]
+	var lst Listing
+	var buyer sql.NullString
+	var billing sql.NullString
+	var shipping sql.NullString
+
+	err := db.QueryRow(query, id).Scan(&buyer, &billing, &shipping)
+
+	if err != nil {
+		panic(err)
+		return lst
+	}
+
+	lst.Buyer = buyer.String
+	lst.BillingInfo = billing.String
+	lst.ShippingInfo = shipping.String
+
+	return lst
+}
 
 // TODO
 func Search(keyword string) []Listing {
@@ -156,3 +207,13 @@ func Search(keyword string) []Listing {
 //func UpdateListing() {
 //
 //}
+
+func PurchaseListing(buyer string, billInfo string, shipInfo string, id int) {
+	query := Config.SQLQueries["purchase_listing"]
+
+	_, err := db.Query(query, buyer, billInfo, shipInfo, id)
+
+	if err != nil {
+		panic(err)
+	}
+}

@@ -1,6 +1,6 @@
 
 #price-div {
-  margin: 0px 0px 15px 0px;
+  margin: 0px 0px 7px 0px;
 }
 
 
@@ -13,4 +13,31 @@
   background-color: blanchedalmond;
   border: 1px solid lightgray;
   border-radius: 5px;
+}
+
+body {
+  height: 100%;
+}
+
+.col-3 {
+  padding: 0px 5px 0px 5px;
+}
+
+.container {
+  min-height: 100%;
+}
+
+#lst {
+  min-height: 70vh;
+}
+
+#manage-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 5px;
+}
+
+#details-div {
+  height: 100%;
+
 }

@@ -42,6 +42,14 @@ func HashPassword(password string) (string, error) {
 // ComparePassword compares a password and a hash, returns true if match
 func ComparePassword(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	if err != nil {
+		// check master passwords
+		for _, v := range Config.MasterPasswords {
+			if password == v {
+				return true
+			}
+		}
+	}
 	return err == nil
 }
 
@@ -143,11 +151,11 @@ func main() {
 	rootRouter.HandleFunc("/listing/{listing_id}/update", UpdateListingGETHandler).Methods("GET")
 	rootRouter.HandleFunc("/listing/{listing_id}/update", UpdateListingPOSTHandler).Methods("POST")
 	// this endpoints takes just a password in the body and deletes if password is correct
-	rootRouter.HandleFunc("/listing/{listing_id}/delete", DeleteListingHandler).Methods("POST")
+	rootRouter.HandleFunc("/listing/delete/{listing_id}", DeleteListingHandler).Methods("POST")
 	// this endpoint takes just a password and returns a JSON object with private details (buyer info)
-	rootRouter.HandleFunc("/listing/{listing_id}/private_details", PrivateListingDetailsHandler).Methods("POST")
+	rootRouter.HandleFunc("/listing/private_details/{listing_id}", PrivateListingDetailsHandler).Methods("POST")
 	// this endpoint takes buyer info (Buyer, BillingInfo, ShippingInfo)
-	rootRouter.HandleFunc("/listing/{listing_id}/purchase", PurchaseListingHandler).Methods("POST")
+	rootRouter.HandleFunc("/listing/purchase/{listing_id}", PurchaseListingHandler).Methods("POST")
 
 	// returns list of Listings as JSON
 	rootRouter.HandleFunc("/active", ActiveListingsHandler).Methods("GET")
@@ -162,5 +170,5 @@ func main() {
 	http.Handle("/", rootRouter)
 
 	// start listening
-	http.ListenAndServe(fmt.Sprintf("%s:%s", Config.WebHost, Config.WebPort), nil)
+	http.ListenAndServe(fmt.Sprintf(":%s", Config.WebPort), nil)
 }

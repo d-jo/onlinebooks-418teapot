@@ -32,6 +32,7 @@ func CreateListingPOSTHandler(w http.ResponseWriter, r *http.Request) {
 	err = json.Unmarshal(bytes, &lst)
 	log.Println(lst)
 	hash, err := HashPassword(lst.ListingPassword)
+	fmt.Println(lst.Title) //take out later
 	lst.ListingPassword = hash
 	log.Println("CAN INSERT")
 	log.Println(lst)
@@ -115,14 +116,54 @@ func UpdateListingPOSTHandler(w http.ResponseWriter, r *http.Request) {
 
 // DeleteListingHandler POST T8
 func DeleteListingHandler(w http.ResponseWriter, r *http.Request) {
-	// use the lines below to get the data from URL {listing_id}
-	//vars := mux.Vars(r)
-	//vars["listing_id"]
+	//get the listing ID
+	vars := mux.Vars(r)
+	selectedID := vars["listing_id"]
+	intID, err := strconv.Atoi(selectedID)
+	//log.Printf("inside the deleteLIstinghandler. intID is %d \n", intID)
 
-	// decode password from body
-	// check password is correct
-	// if password is correct, delete listing with id
+	var lst Listing
+	bytes, err := ioutil.ReadAll(r.Body)
 
+	if err != nil {
+		panic(err)
+	}
+	//log.Println("Printing string(btyes) in delete handler:")
+	log.Println(string(bytes))
+
+	err = json.Unmarshal(bytes, &lst)
+	log.Println(lst)
+	//log.Printf("The password in the delete handler is %s", lst.ListingPassword)
+
+	if err != nil {
+		fmt.Fprintf(w, "fail")
+	} else {
+		passwordIn := lst.ListingPassword
+
+		//call SelectPassword get the hash of the Listing with intID.
+		hashToCheckAgainst := SelectPassword(intID)
+		//log.Printf("hashToCheckAgainst(the result of SelectPassword) is %s \n", hashToCheckAgainst)
+
+		// check password is correct
+		passwordIsCorrect := ComparePassword(passwordIn, hashToCheckAgainst)
+
+		//log.Printf("the result of ComparePassword is %t \n", passwordIsCorrect)
+
+		// if password is correct, delete listing with id
+		if passwordIsCorrect == true {
+			//log.Println("password matches. It should delete listing\n")
+
+			DeleteListing(intID) //delete the listing from table
+
+			w.WriteHeader(200)
+			fmt.Fprintf(w, "%t", true)
+			log.Println("CAN DELETE \n")
+
+		} else { // wrong password
+			w.WriteHeader(200)
+			fmt.Fprintf(w, "%t", false)
+		}
+	}
 }
 
 // ActiveListingsHandler GET T9
@@ -173,18 +214,76 @@ func SearchListingsHandler(w http.ResponseWriter, r *http.Request) {
 // PrivateListingDetailsHandler POST T11
 func PrivateListingDetailsHandler(w http.ResponseWriter, r *http.Request) {
 	// use the lines below to get the data from URL {listing_id}
-	//vars := mux.Vars(r)
-	//vars["listing_id"]
+	vars := mux.Vars(r)
 
-	// checks the password
-	// if match, get the private details (buyer info)
+	lstID, err := strconv.Atoi(vars["listing_id"])
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
 
+	var lst Listing
+	bytes, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = json.Unmarshal(bytes, &lst)
+
+	if err != nil {
+
+		w.WriteHeader(200)
+		fmt.Fprintf(w, "%s", "false_json_unmarshal")
+
+	} else {
+		dbPassword := SelectPassword(lstID)
+		passwordIsCorrect := ComparePassword(lst.ListingPassword, dbPassword)
+
+		if passwordIsCorrect {
+			// select private listing details
+			lst := SelectPrivate(lstID)
+			js, err := json.Marshal(lst)
+			if err != nil {
+				w.WriteHeader(200)
+				fmt.Fprintf(w, "%s", "false_json")
+
+			} else {
+				w.WriteHeader(200)
+				w.Header().Set("Content-Type", "application/json")
+				w.Write(js)
+			}
+		} else {
+			w.WriteHeader(200)
+			fmt.Fprintf(w, "%s", "false_password")
+		}
+	}
 }
 
 // PurchaseListingHandler POST T12
 func PurchaseListingHandler(w http.ResponseWriter, r *http.Request) {
 	// use the lines below to get the data from URL {listing_id}
-	//vars := mux.Vars(r)
-	//vars["listing_id"]
+	vars := mux.Vars(r)
+	log.Println("listing.purchase")
+
+	var lst Listing
+	bytes, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		panic(err)
+	}
+	err = json.Unmarshal(bytes, &lst)
+	lst.Status = "purchased"
+	lst.ID, err = strconv.Atoi(vars["listing_id"])
+
+	if err != nil {
+		fmt.Fprintf(w, "fail")
+
+	} else {
+		if lst.ID > -1 {
+			PurchaseListing(lst.Buyer, lst.BillingInfo, lst.ShippingInfo, lst.ID)
+			fmt.Fprintf(w, "true")
+		} else {
+			fmt.Fprintf(w, "false")
+		}
+	}
 
 }
