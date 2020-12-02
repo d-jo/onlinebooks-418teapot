@@ -35,6 +35,38 @@ function purchase() {
 
 }
 
+function get_private_details() {
+  let listing_password = $("#listing_password").val();
+
+  // Create object
+  let dataObj = {
+    listing_password: listing_password
+  } 
+
+  $.ajax({
+    type: "POST",
+    url: "/listing/private_details/" + listing_id,
+    data: JSON.stringify(dataObj),
+    success: (o) => {
+      console.log("succ");
+      console.log(o);
+      let buyer = `<p>Buyer: ${o['buyer']}</p>`
+      let billingInfo = `<p>Billing Info: ${o['billing_info']}</p>`
+      let shippingInfo = `<p>Shipping Info: ${o['shipping_info']}</p>`
+      $("#details-div").append(buyer);
+      $("#details-div").append(billingInfo);
+      $("#details-div").append(shippingInfo);
+    },
+    error: (err) => {
+      console.log("err")
+      console.log(err)
+      alert("fail")
+    },
+    dataType: "json"
+  })
+
+}
+
 //Process user input (Password) for delete listing
 function submit_form_password() {
   // get form data
@@ -54,7 +86,6 @@ function submit_form_password() {
     success: (o) => {
       console.log("succ")
       console.log(o);
-      //alert("sucess in getting a response. got to line 40 in listing.js.\n") //when password wrong, it executes this line
       if (o == false) {
         alert("Wrong password. Please try again.") //seems to execute this line when wrong password
       }

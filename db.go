@@ -151,10 +151,19 @@ func DeleteListing(id int) {
 
 }
 
-// TODO
-// func SelectPrivate(password string) Listing {
+// SelectPrivate selects private listing details and returns a listing
+func SelectPrivate(id int) Listing {
+	query := Config.SQLQueries["select_listing_private"]
+	var lst Listing
 
-// }
+	err := db.QueryRow(query, id).Scan(&lst.Buyer, &lst.BillingInfo, &lst.ShippingInfo)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return lst
+}
 
 // TODO
 //func Search(keyword string) {
