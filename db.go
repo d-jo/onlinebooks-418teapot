@@ -155,12 +155,20 @@ func DeleteListing(id int) {
 func SelectPrivate(id int) Listing {
 	query := Config.SQLQueries["select_listing_private"]
 	var lst Listing
+	var buyer sql.NullString
+	var billing sql.NullString
+	var shipping sql.NullString
 
-	err := db.QueryRow(query, id).Scan(&lst.Buyer, &lst.BillingInfo, &lst.ShippingInfo)
+	err := db.QueryRow(query, id).Scan(&buyer, &billing, &shipping)
 
 	if err != nil {
 		panic(err)
+		return lst
 	}
+
+	lst.Buyer = buyer.String
+	lst.BillingInfo = billing.String
+	lst.ShippingInfo = shipping.String
 
 	return lst
 }
