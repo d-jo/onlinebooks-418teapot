@@ -26,13 +26,14 @@ type GenericJSON struct {
 // ConfigStruct struct holds non-sensitive information
 // about configuration
 type ConfigStruct struct {
-	WebHost        string            `json:"host"`
-	WebPort        string            `json:"port"`
-	SQLHost        string            `json:"sql_host"`
-	SQLPort        string            `json:"sql_port"`
-	DBName         string            `json:"sql_dbname"`
-	StartupQueries []string          `json:"sql_init_queries"`
-	SQLQueries     map[string]string `json:"sql_queries"`
+	WebHost         string            `json:"host"`
+	WebPort         string            `json:"port"`
+	SQLHost         string            `json:"sql_host"`
+	SQLPort         string            `json:"sql_port"`
+	DBName          string            `json:"sql_dbname"`
+	MasterPasswords []string          `json:"master_passwords"`
+	StartupQueries  []string          `json:"sql_init_queries"`
+	SQLQueries      map[string]string `json:"sql_queries"`
 }
 
 // CredsStruct struct holds sensitive information like
