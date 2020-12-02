@@ -164,8 +164,10 @@ func SearchListingsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(js)
-	
 
+	//index.js
+	//method to call all the listings
+	// loadListings()
 }
 
 // PrivateListingDetailsHandler POST T11

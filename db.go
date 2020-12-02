@@ -128,9 +128,10 @@ func Search(keyword string) []Listing {
 
 	query := Config.SQLQueries["search_listings"]
 
-	results, err := db.Query(query, keyword)
+	results, err := db.Query(query, keyword, keyword, keyword)
 
-	//results, err := db.Query("SELECT * FROM Listings WHERE title LIKE '%?%' OR description LIKE '%?%' OR isbn LIKE '%?%'")
+	//brokenQ := "SELECT * FROM Listings WHERE title LIKE '" + "%?%" + "' OR description LIKE '" + "%?%" + "' OR isbn LIKE '" + "%?%" +"'"
+	//results, err := db.Query("SELECT * FROM Listings WHERE title LIKE '"+"%?%"+"' OR description LIKE '"+"%?%"+"' OR isbn LIKE '"+"%?%"+"'", keyword, keyword, keyword)
 
 	if err != nil {
 		panic(err.Error())
