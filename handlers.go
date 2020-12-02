@@ -190,12 +190,49 @@ func SearchListingsHandler(w http.ResponseWriter, r *http.Request) {
 // PrivateListingDetailsHandler POST T11
 func PrivateListingDetailsHandler(w http.ResponseWriter, r *http.Request) {
 	// use the lines below to get the data from URL {listing_id}
-	//vars := mux.Vars(r)
-	//vars["listing_id"]
+	vars := mux.Vars(r)
 
-	// checks the password
-	// if match, get the private details (buyer info)
+	lstID, err := strconv.Atoi(vars["listing_id"])
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
 
+	var lst Listing
+	bytes, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = json.Unmarshal(bytes, &lst)
+
+	if err != nil {
+
+		w.WriteHeader(200)
+		fmt.Fprintf(w, "%s", "false_json_unmarshal")
+
+	} else {
+		dbPassword := SelectPassword(lstID)
+		passwordIsCorrect := ComparePassword(lst.ListingPassword, dbPassword)
+
+		if passwordIsCorrect {
+			// select private listing details
+			lst := SelectPrivate(lstID)
+			js, err := json.Marshal(lst)
+			if err != nil {
+				w.WriteHeader(200)
+				fmt.Fprintf(w, "%s", "false_json")
+
+			} else {
+				w.WriteHeader(200)
+				w.Header().Set("Content-Type", "application/json")
+				w.Write(js)
+			}
+		} else {
+			w.WriteHeader(200)
+			fmt.Fprintf(w, "%s", "false_password")
+		}
+	}
 }
 
 // PurchaseListingHandler POST T12

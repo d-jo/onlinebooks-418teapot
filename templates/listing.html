@@ -46,10 +46,20 @@
       <div class="col"></div>
       <div class="col"></div>
     </div>
-    <div class="row">
-      <div class="col-9 well">
+    <div class="row" id="lst">
+      <div class="col-6 well">
         <h5>Description</h5>
         <p id="lst-desc">{{.Description}}</p>
+      </div>
+      <div class="col-3">
+        <div id="details-div" class="well">
+          <h5>Details</h5>
+          <p>Status: {{.Status}}</p>
+          <p>Category: {{.Category}}</p>
+          <p>ISBN: {{.ISBN}}</p>
+          <p>Seller: {{.SellerName}}</p>
+        </div>
+
       </div>
       <div class="col-3">
         <div id="price-div" class="well">
@@ -61,19 +71,16 @@
           <button id="purchase-btn" class="btn btn-success" onclick="purchase()">Purchase</button>
         </div>
 
-        <div id="details-div" class="well">
-          <h5>Details</h5>
-          <p>Status: {{.Status}}</p>
-          <p>Category: {{.Category}}</p>
-          <p>ISBN: {{.ISBN}}</p>
-          <p>Seller: {{.SellerName}}</p>
+        <div id="manage-div" class="well">
           <!-- add password text and delete button here -->
           <div class="form-group">
-            <label for="listing_password">Enter password to delete listing:</label>
+            <label for="listing_password">Enter password to manage listing:</label>
             <input type="password" id="listing_password" name="listing_password" class="form-control">
           </div>
-          <button onclick="submit_form_password()" class='btn btn-success'>Delete</button>
-
+          <div class="row" id="manage-buttons">
+            <button onclick="submit_form_password()" class='btn btn-danger'>Delete</button>
+            <button onclick="get_private_details()" class='btn btn-success'>Get Private Details</button>
+          </div>
         </div>
       </div>
     </div>
