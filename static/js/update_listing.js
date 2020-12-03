@@ -107,18 +107,16 @@ function update_form() {
     console.log(dataObj)
     $.ajax({
       type: "POST",
-      url: "",
+      url: "/listing/" + listing_id,
       data: JSON.stringify(dataObj),
-      success: (o) => {
-        console.log("succ")
-        console.log(o);
-        if (Number.isInteger(o)) {
-          window.location.href = "/listing/" + o;
-        } else {
-          // error
-          alert('error');
-        }
-      },
+      success: loadListings,
+        // console.log(o);
+        // if (Number.isInteger(o)) {
+        //   window.location.href = "/listing/" + o;
+        // } else {
+        //   // error
+        //   alert('error');
+        // }
       error: (err) => {
         console.log("err")
         console.log(err)

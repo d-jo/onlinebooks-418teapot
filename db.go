@@ -178,7 +178,7 @@ func SelectPrivate(id int) Listing {
 //}
 
 // TODO
-func UpdateListing(listingId string, title string, description string, isbn string, price float64, category string, seller string) {
+func UpdateListing(listingId int, title string, description string, isbn string, price float32, category string, seller string) {
 	//var book Listing
 
 	query := Config.SQLQueries["update_listing"]

@@ -7,7 +7,6 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"strings"
 
 	"github.com/gorilla/mux"
 )
@@ -121,25 +120,21 @@ func UpdateListingPOSTHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	listingId := vars["listing_id"]
 	log.Print(listingId)
-
+	var lst Listing
 	bytes, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		panic(err)
 	}
 
 	log.Println(string(bytes))
-	json := string(bytes)
-	title := strings.SplitAfter(json, ":\"")
-	title2 := strings.TrimSuffix(title[1], "\",\"description")
-	log.Println(title2)
-	description := strings.SplitAfter(json, "description:\"")
-	description2 := strings.TrimSuffix(description[1], "\",\"")
-	log.Println(description2)
-	isbn := ""
-	price := 134.0
-	category := "Art"
-	seller := "Mackelmore"
-	UpdateListing(listingId, title[1], category, isbn, price, category, seller)
+	err = json.Unmarshal(bytes, &lst)
+	log.Println(lst)
+	//hash, err := HashPassword(lst.ListingPassword)
+	fmt.Println(lst.Title) //take out later
+	//lst.ListingPassword = hash
+	log.Println(lst)
+
+	UpdateListing(lst.ID, lst.Title, lst.Category, lst.ISBN, lst.Price, lst.Category, lst.SellerName)
 
 	// js, err := json.Marshal()
 	// if err != nil {
