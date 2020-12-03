@@ -43,8 +43,6 @@ function fill() {
     
 }
 
-let isbn_re = new RegExp('^[0-9][0-9]?[0-9]?\-?[0-9][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]?\-?[0-9][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?\-?[0-9][0-9]?[0-9]?[0-9]?[0-9]?[0-9]?\-?[0-9]?$');
-
 function validate_isbn(sampleISBN) {
   return isbn_re.test(sampleISBN);
 }
@@ -129,5 +127,5 @@ function update_form() {
     })
   
   }
-  }
+  
   

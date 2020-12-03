@@ -120,8 +120,27 @@ func UpdateListingPOSTHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	listingId := vars["listing_id"]
 	log.Print(listingId)
-	UpdateListing(listingId)
 
+	bytes, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		panic(err)
+	}
+
+	log.Println(string(bytes))
+	title := "hi"
+	description := "des"
+	isbn := ""
+	price := 134.0
+	category := "Art"
+	seller := "Mackelmore"
+	UpdateListing(listingId, title, description, isbn, price, category, seller)
+
+	// js, err := json.Marshal()
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// w.Header().Set("Content-Type", "application/json")
+	// w.Write(js)
 	// decode the body
 	// use DB update the listing if password is correct
 
