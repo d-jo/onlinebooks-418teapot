@@ -18,8 +18,13 @@ function submit_form() {
   let category = $("#category").val();
   let seller_name = $("#seller_name").val();
   let listing_password = $("#listing_password").val();
+  let confirm_listing_password = $("#confirm_listing_password").val();
 
   let errorMessage = "";
+
+  if (listing_password != confirm_listing_password) {
+    errorMessage += "Passwords do not match\n";
+  }
 
   // VERIFY HERE
   if (title.length < 6) {
