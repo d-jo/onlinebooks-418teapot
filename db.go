@@ -174,8 +174,36 @@ func SelectPrivate(id int) Listing {
 }
 
 // TODO
-//func Search(keyword string) {
-//}
+func Search(keyword string) []Listing {
+	log.Println(keyword)
+	var buyer sql.NullString
+	var billing sql.NullString
+	var shipping sql.NullString
+
+	query := Config.SQLQueries["search_listings"]
+
+	results, err := db.Query(query, keyword, keyword, keyword)
+
+	if err != nil {
+		panic(err.Error())
+	}
+	var books []Listing
+	for results.Next() {
+		var book Listing
+
+		err = results.Scan(&book.ID, &book.Title, &book.Description, &book.ISBN, &book.Price, &book.Category, &book.SellerName, &book.ListingPassword, &book.Status, &buyer, &billing, &shipping)
+		if err != nil {
+			panic(err)
+		}
+		book.Buyer = buyer.String
+		book.BillingInfo = billing.String
+		book.ShippingInfo = shipping.String
+		books = append(books, book)
+		log.Println(book.Title)
+	}
+
+	return books
+}
 
 // TODO
 //func UpdateListing() {
