@@ -17,7 +17,10 @@ function search() {
     type: "POST",
     url: "/search",
     data: JSON.stringify(dataObj),
-    success: loadListings,
+    success: (o) => {
+      data = o;
+      loadListings();
+    },
     error: (err) => {
       console.log("err")
       console.log(err)

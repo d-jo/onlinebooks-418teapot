@@ -1,5 +1,8 @@
 
-function loadListings(data) {
+var data = []
+var full_data = []
+
+function loadListings() {
   $("#listings").empty();
   console.log("success");
   console.log(data);
@@ -24,20 +27,42 @@ function loadListings(data) {
     </div>`
     let lst = $(listing_tmpl);
     $('#listings').append(lst);
-    
   }
+}
 
+function viewActiveOnly() {
+  let new_data = []
+  for (let i = 0; i < data.length; i++) {
+    if (data[i]['status'] == "active") {
+      new_data.push(data[i]);
+    }
+  }
+  data = new_data;
+  loadListings();
+}
+
+function viewAll() {
+  data = full_data;
+  loadListings();
+}
+
+function loadAllActive() {
+  $.ajax({
+    type: "GET",
+    url: "/active",
+    success: (o) => {
+      data = o;
+      full_data = o;
+      loadListings();
+    },
+    error: (err) => {
+      console.log("error");
+      $('#listings').append("Error: " + err.message);
+    }
+  })
 }
 
 $(() => {
   console.log("Doc Loaded")
-  $.ajax({
-    type: "GET",
-    url: "/active",
-    success: loadListings,
-    error: (err) => {
-      console.log("error")
-      $('#listings').append("Error: " + err.message);
-    }
-  })
+  loadAllActive();
 })
