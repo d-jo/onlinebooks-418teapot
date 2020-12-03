@@ -206,16 +206,6 @@ func SearchListingsHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(js)
 
-	if len(searchResults) == 0 {
-		// no search result
-		w.WriteHeader(http.StatusNotFound)
-	} else {
-		// found
-		// display these somehow....
-		// call the load listing function in index.js...????
-		RenderSingleListingTemplate(w, "listing.html", searchResults[0])
-	}
-
 }
 
 // PrivateListingDetailsHandler POST T11

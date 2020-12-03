@@ -17,16 +17,7 @@ function search() {
     type: "POST",
     url: "/search",
     data: JSON.stringify(dataObj),
-    success: (o) => {
-      console.log("succ")
-      console.log(o);
-      if (Number.isInteger(o)) {
-        window.location.href = "/search/" + o;
-      } else {
-        // error
-        alert('error');
-      }
-    },
+    success: loadListings,
     error: (err) => {
       console.log("err")
       console.log(err)
