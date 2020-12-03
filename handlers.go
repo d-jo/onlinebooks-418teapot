@@ -93,13 +93,25 @@ func PublicListingDataHandler(w http.ResponseWriter, r *http.Request) {
 // serves the update listing page using the template update.html
 // similar to PublicListingDataHandler
 func UpdateListingGETHandler(w http.ResponseWriter, r *http.Request) {
-	// use the lines below to get the data from URL {listing_id}
-	//vars := mux.Vars(r)
-	//vars["listing_id"]
+	//http.ServeFile(w, r, "./pages/update.html")
+	vars := mux.Vars(r)
+	selectedID := vars["listing_id"]
+	ID, err := strconv.Atoi(selectedID)
 
-	// get the listing details from database
-	// use RenderSingleListingTemplate with tmpl=update.html
+	if err != nil {
+		//ahh
+		log.Println("yikes")
+	}
+	// get listing info from DB using ID
+	selectedListing := SelectPublicListingDetails(ID)
 
+	if len(selectedListing) == 0 {
+		// 404
+		w.WriteHeader(http.StatusNotFound)
+	} else {
+		// good
+		RenderSingleListingTemplate(w, "update.html", selectedListing[0])
+	}
 }
 
 // UpdateListingPOSTHandler POST T7
