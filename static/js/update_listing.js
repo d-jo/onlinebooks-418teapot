@@ -107,7 +107,7 @@ function update_form() {
     console.log(dataObj)
     $.ajax({
       type: "POST",
-      url: "/update",
+      url: "",
       data: JSON.stringify(dataObj),
       success: (o) => {
         console.log("succ")
