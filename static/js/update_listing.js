@@ -56,6 +56,9 @@ function update_form() {
     let category = $("#category").val();
     let seller_name = $("#seller_name").val();
     
+    let listing_password = $("#listing_password").val();
+
+ 
   
     let errorMessage = "";
   
@@ -101,24 +104,29 @@ function update_form() {
       isbn: isbn,
       price: price,
       category: category,
-      seller_name: seller_name
+      seller_name: seller_name,
+      listing_password: listing_password
     }
   
     console.log(dataObj)
     $.ajax({
       type: "POST",
-      url: "/listing/" + listing_id,
+      url: "",
       data: JSON.stringify(dataObj),
-      success: loadListings,
-        // console.log(o);
-        // if (Number.isInteger(o)) {
-        //   window.location.href = "/listing/" + o;
-        // } else {
-        //   // error
-        //   alert('error');
-        // }
+      success: (o) => {
+        console.log("succ")
+        console.log(o);
+        if (o == false) {
+         alert("Wrong password. Please try again.") //seems to execute this line when wrong password
+        }
+        else {
+          alert("You have successfully updated your listing.")
+          window.location.href =  '/listing/' + listing_id;
+        }
+        //window.location.href = "/listing/" + listing_id;
+      },
       error: (err) => {
-        console.log("err")
+        console.log("error")
         console.log(err)
       },
       dataType: "json"

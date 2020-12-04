@@ -119,6 +119,7 @@ func UpdateListingPOSTHandler(w http.ResponseWriter, r *http.Request) {
 	// use the lines below to get the data from URL {listing_id}
 	vars := mux.Vars(r)
 	listingId := vars["listing_id"]
+	intID, err := strconv.Atoi(listingId)
 	log.Print(listingId)
 	var lst Listing
 	bytes, err := ioutil.ReadAll(r.Body)
@@ -128,22 +129,39 @@ func UpdateListingPOSTHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Println(string(bytes))
 	err = json.Unmarshal(bytes, &lst)
-	log.Println(lst)
+
 	//hash, err := HashPassword(lst.ListingPassword)
 	fmt.Println(lst.Title) //take out later
 	//lst.ListingPassword = hash
 	log.Println(lst)
 
-	UpdateListing(lst.ID, lst.Title, lst.Category, lst.ISBN, lst.Price, lst.Category, lst.SellerName)
+	if err != nil {
+		fmt.Fprintf(w, "fail")
+	} else {
+		passwordIn := lst.ListingPassword
 
-	// js, err := json.Marshal()
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// w.Header().Set("Content-Type", "application/json")
-	// w.Write(js)
-	// decode the body
-	// use DB update the listing if password is correct
+		//call SelectPassword get the hash of the Listing with intID.
+		hashToCheckAgainst := SelectPassword(intID)
+		//log.Printf("hashToCheckAgainst(the result of SelectPassword) is %s \n", hashToCheckAgainst)
+
+		// check password is correct
+		passwordIsCorrect := ComparePassword(passwordIn, hashToCheckAgainst)
+
+		// if password is correct ... go to update page?
+		if passwordIsCorrect == true {
+
+			UpdateListing(intID, lst.Title, lst.Category, lst.ISBN, lst.Price, lst.Category, lst.SellerName)
+
+			w.WriteHeader(200)
+			fmt.Fprintf(w, "%t", true)
+			log.Println("CAN DELETE \n")
+
+		} else { // wrong password
+
+			w.WriteHeader(200)
+			fmt.Fprintf(w, "%t", false)
+		}
+	}
 
 }
 
