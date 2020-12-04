@@ -82,7 +82,7 @@ function get_private_details() {
     error: (err) => {
       console.log("err")
       console.log(err)
-      alert("fail")
+      alert("Wrong password. Please try again.") //seems to execute this line when wrong password
     },
     dataType: "json"
   })
