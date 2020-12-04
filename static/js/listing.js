@@ -9,6 +9,28 @@ function purchase() {
   let name = $("#buyer_name").val();
   let billing = $("#buyer_billing").val();
   let shipping = $("#buyer_shipping").val();
+
+  let haserr = false;
+  let err = "Error: "
+
+  if (name.length < 2) {
+    err += "Name must be at least 2 characters\n";
+    haserr = true;
+  }
+  if (billing.length < 8) {
+    err += "Billing info must be at least 8 characters\n";
+    haserr = true;
+  }
+  if (shipping.length < 8) {
+    err += "Shipping must be at least 8 characters\n";
+    haserr = true;
+  }
+
+  if (haserr) {
+    alert(err);
+    return
+  }
+
   dataObj = {
     "buyer": name,
     "billing_info": billing,
