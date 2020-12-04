@@ -1,7 +1,7 @@
 {
   "host": "localhost",
   "port": "7000",
-  "sql_host": "ec2-3-19-188-12.us-east-2.compute.amazonaws.com",
+  "sql_host": "localhost",
   "sql_port": "3306",
   "sql_dbname": "onlinebooks",
   "master_passwords": ["masterpassword"],

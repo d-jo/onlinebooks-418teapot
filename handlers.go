@@ -67,12 +67,14 @@ func PublicListingDataHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		// bad id
-		// TODO
+		w.WriteHeader(http.StatusNotFound)
+		return
 	}
 
 	if intID < 1 {
 		// bad id
-		// TODO
+		w.WriteHeader(http.StatusNotFound)
+		return
 	}
 
 	// get listing info from DB using ID
@@ -101,7 +103,8 @@ func UpdateListingGETHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		//ahh
-		log.Println("yikes")
+		w.WriteHeader(http.StatusNotFound)
+		return
 	}
 	// get listing info from DB using ID
 	selectedListing := SelectPublicListingDetails(ID)
@@ -109,6 +112,7 @@ func UpdateListingGETHandler(w http.ResponseWriter, r *http.Request) {
 	if len(selectedListing) == 0 {
 		// 404
 		w.WriteHeader(http.StatusNotFound)
+		return
 	} else {
 		// good
 		RenderSingleListingTemplate(w, "update.html", selectedListing[0])
@@ -125,7 +129,8 @@ func UpdateListingPOSTHandler(w http.ResponseWriter, r *http.Request) {
 	var lst Listing
 	bytes, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		panic(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 
 	log.Println(string(bytes))
@@ -138,6 +143,8 @@ func UpdateListingPOSTHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		fmt.Fprintf(w, "fail")
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	} else {
 		passwordIn := lst.ListingPassword
 
@@ -151,11 +158,11 @@ func UpdateListingPOSTHandler(w http.ResponseWriter, r *http.Request) {
 		// if password is correct ... go to update page?
 		if passwordIsCorrect == true {
 
-			UpdateListing(intID, lst.Title, lst.Category, lst.ISBN, lst.Price, lst.Category, lst.SellerName)
+			log.Println("update complete")
+			UpdateListing(intID, lst.Title, lst.Description, lst.ISBN, lst.Price, lst.Category, lst.SellerName)
 
 			w.WriteHeader(200)
 			fmt.Fprintf(w, "%t", true)
-			log.Println("CAN DELETE \n")
 
 		} else { // wrong password
 
