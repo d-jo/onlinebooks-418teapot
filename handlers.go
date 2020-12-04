@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gorilla/mux"
 )
@@ -233,10 +234,30 @@ func ActiveListingsHandler(w http.ResponseWriter, r *http.Request) {
 
 // SearchListingsHandler POST T10
 func SearchListingsHandler(w http.ResponseWriter, r *http.Request) {
-
 	// uses get keyword from body
 	// execute search query on SQL
-	// return json-encoded array of listings
+	// return json-encoded array of list
+	var keyword string
+	bytes, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		panic(err)
+	}
+
+	log.Println(string(bytes))
+
+	keyword = string(bytes)
+	res1 := strings.SplitAfter(keyword, ":\"")
+	withQ := strings.TrimSuffix(res1[1], "}")
+	cleanedString := strings.TrimSuffix(withQ, "\"")
+	searchResults := Search(cleanedString)
+
+	js, err := json.Marshal(searchResults)
+	if err != nil {
+		panic(err)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
+
 }
 
 // PrivateListingDetailsHandler POST T11

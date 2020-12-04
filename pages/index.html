@@ -7,6 +7,7 @@
     <script async defer src="static/js/popper.min.js"></script>
     <script async defer src="static/js/bootstrap.js"></script>
     <script src="static/js/index.js"></script>
+    <script src="/static/js/search_listings.js"></script>
   </head>
   <body>
     
@@ -27,8 +28,10 @@
           </ul>
 
           <div class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" disabled>
-            <button class="btn btn-outline-success my-2 my-sm-0" disabled>Search</button>
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search">
+            <button class="btn btn-outline-success my-2 my-sm-0" onclick="search()">Search</button>    
+            <button class="btn btn-outline-success my-2 my-sm-0" onclick="viewActiveOnly()">Active Only</button>    
+            <button class="btn btn-outline-success my-2 my-sm-0" onclick="viewAll()">View All</button>    
           </div>
           
         </div>
