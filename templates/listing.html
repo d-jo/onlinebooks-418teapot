@@ -12,6 +12,7 @@
       const status = {{.Status}};
     </script>
     <script src="/static/js/listing.js"></script>
+    <script src="/static/js/update_listing.js"></script>
   </head>
   <body>
 
@@ -78,8 +79,16 @@
           <div class="row" id="manage-buttons">
             <button onclick="submit_form_password()" class='btn btn-danger'>Delete</button>
             <button onclick="get_private_details()" class='btn btn-success'>Get Private Details</button>
+            <!--<button onclick="updateCheckPass()" class='btn btn-success'>Update Listing</button>-->
+           
           </div>
         </div>
+  
+        <div class="well">
+
+          <a href="/listing/{{.ID}}/update" class='btn btn-success' >Update Details of this Listing</a>
+        </div>
+
       </div>
     </div>
     

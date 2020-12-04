@@ -1,7 +1,7 @@
 {
   "host": "localhost",
   "port": "7000",
-  "sql_host": "localhost",
+  "sql_host": "ec2-3-19-188-12.us-east-2.compute.amazonaws.com",
   "sql_port": "3306",
   "sql_dbname": "onlinebooks",
   "master_passwords": ["masterpassword"],
@@ -14,7 +14,7 @@
     "select_listing_private": "SELECT buyer,billing_info,shipping_info FROM Listings WHERE id=? LIMIT 1",
     "create_listing": "INSERT INTO Listings (title, description, isbn, price, category, seller, listing_password, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
     "search_listings": "SELECT * FROM Listings WHERE (title LIKE CONCAT('%', ?, '%') OR description LIKE CONCAT('%', ?, '%') OR isbn LIKE CONCAT('%', ?, '%')) AND (status='purchased' OR status='active')",
-    "update_listing": "",
+    "update_listing": "UPDATE Listings SET title = ?, description = ?, isbn = ?, price = ?, category = ?, seller = ? WHERE id = ?",
     "delete_listing": "DELETE FROM Listings WHERE id = ?",
     "select_password":"SELECT listing_password FROM Listings WHERE id=? LIMIT 1",
     "purchase_listing": "UPDATE Listings SET status=\"purchased\", buyer=?, billing_info=?, shipping_info=? WHERE id=?"

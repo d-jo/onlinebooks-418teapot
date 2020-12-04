@@ -119,3 +119,39 @@ $(() => {
   }
 })
 
+//Process user input (Password) for delete listing
+function updateCheckPass() {
+  // get form data
+ // console.log("hello im in the submit_form_password func\n")
+  let listing_password = $("#listing_password").val();
+
+  // Create object
+  let dataObj = {
+    listing_password: listing_password
+  } 
+  
+  console.log(dataObj)
+  $.ajax({
+    type: "POST",
+    url: "/listing/" + listing_id + "/update",
+    data: JSON.stringify(dataObj),
+    success: (o) => {
+      console.log("succ")
+      console.log(o);
+      if (o == false) {
+        alert("Wrong password. Please try again.") //seems to execute this line when wrong password
+      }
+      else {
+        alert("You have successfully entered your listing.")
+        window.location.href =  '/listing/' + listing_id + "/update";
+      }
+    },
+    error: (err) => {
+      console.log("err")
+      console.log(err)
+      alert("fail")
+    },
+    dataType: "json"
+  })
+}
+

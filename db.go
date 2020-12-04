@@ -206,9 +206,17 @@ func Search(keyword string) []Listing {
 }
 
 // TODO
-//func UpdateListing() {
-//
-//}
+func UpdateListing(listingId int, title string, description string, isbn string, price float32, category string, seller string) {
+	//var book Listing
+
+	query := Config.SQLQueries["update_listing"]
+
+	_, err := db.Query(query, title, description, isbn, price, category, seller, listingId)
+
+	if err != nil {
+		panic(err)
+	}
+}
 
 func PurchaseListing(buyer string, billInfo string, shipInfo string, id int) {
 	query := Config.SQLQueries["purchase_listing"]

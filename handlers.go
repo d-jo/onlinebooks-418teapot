@@ -94,23 +94,75 @@ func PublicListingDataHandler(w http.ResponseWriter, r *http.Request) {
 // serves the update listing page using the template update.html
 // similar to PublicListingDataHandler
 func UpdateListingGETHandler(w http.ResponseWriter, r *http.Request) {
-	// use the lines below to get the data from URL {listing_id}
-	//vars := mux.Vars(r)
-	//vars["listing_id"]
+	//http.ServeFile(w, r, "./pages/update.html")
+	vars := mux.Vars(r)
+	selectedID := vars["listing_id"]
+	ID, err := strconv.Atoi(selectedID)
 
-	// get the listing details from database
-	// use RenderSingleListingTemplate with tmpl=update.html
+	if err != nil {
+		//ahh
+		log.Println("yikes")
+	}
+	// get listing info from DB using ID
+	selectedListing := SelectPublicListingDetails(ID)
 
+	if len(selectedListing) == 0 {
+		// 404
+		w.WriteHeader(http.StatusNotFound)
+	} else {
+		// good
+		RenderSingleListingTemplate(w, "update.html", selectedListing[0])
+	}
 }
 
 // UpdateListingPOSTHandler POST T7
 func UpdateListingPOSTHandler(w http.ResponseWriter, r *http.Request) {
 	// use the lines below to get the data from URL {listing_id}
-	//vars := mux.Vars(r)
-	//vars["listing_id"]
+	vars := mux.Vars(r)
+	listingId := vars["listing_id"]
+	intID, err := strconv.Atoi(listingId)
+	log.Print(listingId)
+	var lst Listing
+	bytes, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		panic(err)
+	}
 
-	// decode the body
-	// use DB update the listing if password is correct
+	log.Println(string(bytes))
+	err = json.Unmarshal(bytes, &lst)
+
+	//hash, err := HashPassword(lst.ListingPassword)
+	fmt.Println(lst.Title) //take out later
+	//lst.ListingPassword = hash
+	log.Println(lst)
+
+	if err != nil {
+		fmt.Fprintf(w, "fail")
+	} else {
+		passwordIn := lst.ListingPassword
+
+		//call SelectPassword get the hash of the Listing with intID.
+		hashToCheckAgainst := SelectPassword(intID)
+		//log.Printf("hashToCheckAgainst(the result of SelectPassword) is %s \n", hashToCheckAgainst)
+
+		// check password is correct
+		passwordIsCorrect := ComparePassword(passwordIn, hashToCheckAgainst)
+
+		// if password is correct ... go to update page?
+		if passwordIsCorrect == true {
+
+			UpdateListing(intID, lst.Title, lst.Category, lst.ISBN, lst.Price, lst.Category, lst.SellerName)
+
+			w.WriteHeader(200)
+			fmt.Fprintf(w, "%t", true)
+			log.Println("CAN DELETE \n")
+
+		} else { // wrong password
+
+			w.WriteHeader(200)
+			fmt.Fprintf(w, "%t", false)
+		}
+	}
 
 }
 
