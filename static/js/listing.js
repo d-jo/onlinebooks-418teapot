@@ -57,7 +57,13 @@ function purchase() {
 
 }
 
+var hasPrivateDetails = false;
+
 function get_private_details() {
+  if (hasPrivateDetails) {
+    return;
+  }
+
   let listing_password = $("#listing_password").val();
 
   // Create object
@@ -78,6 +84,7 @@ function get_private_details() {
       $("#details-div").append(buyer);
       $("#details-div").append(billingInfo);
       $("#details-div").append(shippingInfo);
+      hasPrivateDetails = true;
     },
     error: (err) => {
       console.log("err")
